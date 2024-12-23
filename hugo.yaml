@@ -1,0 +1,75 @@
+baseURL: https://amisgo-doc.pages.dev/
+defaultContentLanguage: zh-cn
+languageCode: zh-CN
+title: amisgo
+
+module:
+  imports:
+    - path: github.com/imfing/hextra # hextra theme
+
+# https://imfing.github.io/hextra/docs/
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+menu:
+  main:
+    - name: 背景
+      weight: 1
+      pageRef: /background/dev-frontend-with-go
+      params:
+        icon: card
+    - name: 教程
+      weight: 2
+      pageRef: /tutorials/quick-start
+      params:
+        icon: book-open
+    - name: Q&A
+      weight: 3
+      pageRef: /qa
+      params:
+        icon: chat-alt
+    - name: Search
+      weight: 9
+      params:
+        type: search
+    - identifier: github
+      name: GitHub ↗
+      weight: 10
+      url: "https://github.com/zrcoder/amisgo"
+      params:
+        icon: github
+  sidebar:
+    - identifier: more
+      name:
+      params:
+        type: separator
+      weight: 1
+    - identifier: amis
+      name: Baidu Amis  ↗
+      weight: 11
+      url: "https://aisuda.bce.baidu.com/amis"
+      params:
+        icon: external-link
+params:
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: /logo.svg
+  editURL:
+    enable: true
+    base: "https://github.com/zrcoder/amisgo-doc/edit/main/content/"
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true
+  footer:
+    enable: false
+
+  comments:
+    enable: false
