@@ -34,7 +34,7 @@ menu:
         type: search
     - name: GitHub
       weight: 4
-      url: "https://github.com/zrcoder/amisgo-doc"
+      url: "https://github.com/zrcoder/amisgo"
       params:
         icon: github
 
