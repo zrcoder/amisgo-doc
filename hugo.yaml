@@ -1,4 +1,4 @@
-baseURL: https://yaq.netlify.app/
+baseURL: https://amisgo-doc.pages.dev/
 defaultContentLanguage: zh-cn
 languageCode: zh-CN
 title: amisgo
@@ -46,7 +46,7 @@ params:
       path: /logo.svg
   editURL:
     enable: true
-    base: "https://github.com/zrcoder/amisgo-doc/edit/master/content/"
+    base: "https://github.com/zrcoder/amisgo-doc/edit/main/content/"
   theme:
     # light | dark | system
     default: light
