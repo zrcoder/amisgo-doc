@@ -88,11 +88,11 @@ func getDate() (any, error) {
 }
 ```
 
-## Action
+## Action 按钮
 
 假设页面有两个编辑器，第一个用于输入 json，第二个是只读的，当点击按钮后，以第一个编辑器的内容作为输入，转换为 yaml，渲染到第二个编辑器中，怎么做呢？
 
-直接借助 ajax 类型的 action，可以这么写：
+直接借助 ajax 类型的行为按钮，可以这么写：
 
 ```go
 func init() {
@@ -134,7 +134,7 @@ func main() {
 ...
 ```
 
-显然，这也比较啰嗦，我们为此新增了 Transform 方法：
+显然，这也比较啰嗦，我们为行为按钮新增了 Transform 方法：
 
 ```go
 func (a action) Transform(src, dst, successMsg string, transfor func(input any) (any, error)) action
