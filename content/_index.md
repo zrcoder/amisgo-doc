@@ -6,11 +6,28 @@ cascade:
   type: docs
 ---
 
-![amisgo](logo-with-text.svg)
+{{< hextra/hero-badge >}}
+<img src="logo-with-text.svg" />
+{{< /hextra/hero-badge >}}
 
-**amisgo** 是一个为 Go 开发者提供的低代码前端框架，由百度 [amis](https://aisuda.bce.baidu.com/amis) 驱动；这个名称将 amis 和 go 结合在一起，巧的是在祖鲁语中意为"朋友"。
+<div class="hx-mt-6 hx-mb-6">
+{{< hextra/hero-headline >}}
+  Go 开发者的好朋友   
+{{< /hextra/hero-headline >}}
+</div>
 
-{{< cards cols="1">}}
+<div class="hx-mb-12">
+{{< hextra/hero-subtitle >}}
+  简洁而丰富的前端库<br />
+  由百度 amis 驱动
+{{< /hextra/hero-subtitle >}}
+</div>
+
+<div class="hx-mb-6">
+{{< hextra/hero-button text="现在开始" link="background" >}}
+</div>
+
+{{< cards >}}
 {{< card link="background" title="背景" icon="card" >}}
 {{< card link="tutorials" title="教程" icon="book-open" >}}
 {{< card link="qa" title="常见问题" icon="chat-alt" >}}
