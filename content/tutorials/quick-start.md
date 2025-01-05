@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	index := comp.Page().Title("Amisgo").Body(
+	index := comp.Page().Title("amisgo").Body(
 		comp.Form().
 		Api("https://xxx/api/saveForm").
 		Body(

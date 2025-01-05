@@ -20,12 +20,12 @@ menu:
   main:
     - name: 背景
       weight: 1
-      pageRef: /background/dev-frontend-with-go
+      pageRef: /background
       params:
         icon: card
     - name: 教程
       weight: 2
-      pageRef: /tutorials/quick-start
+      pageRef: /tutorials
       params:
         icon: book-open
     - name: Q&A
@@ -50,7 +50,7 @@ menu:
         type: separator
       weight: 1
     - identifier: amis
-      name: Baidu Amis  ↗
+      name: Baidu amis  ↗
       weight: 11
       url: "https://aisuda.bce.baidu.com/amis"
       params:
