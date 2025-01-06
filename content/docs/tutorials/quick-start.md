@@ -2,7 +2,7 @@
 title: "快速开始"
 date: 2024-12-23T16:26:55+08:00
 weight: 1
-prev: background/codes-in-comp.md
+prev: docs/background/codes-in-comp.md
 ---
 
 ```go

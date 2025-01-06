@@ -15,4 +15,4 @@ Gophers' 前端库
 {{< /hextra/hero-subtitle >}}
 </div>
 
-{{< hextra/hero-button text="现在开始" link="background" >}}
+{{< hextra/hero-button text="现在开始" link="docs/background" >}}

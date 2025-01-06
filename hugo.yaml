@@ -20,17 +20,17 @@ menu:
   main:
     - name: 背景
       weight: 1
-      pageRef: /background
+      pageRef: /docs/background
       params:
         icon: card
     - name: 教程
       weight: 2
-      pageRef: /tutorials
+      pageRef: /docs/tutorials
       params:
         icon: book-open
     - name: Q&A
       weight: 3
-      pageRef: /qa
+      pageRef: /docs/qa
       params:
         icon: chat-alt
     - name: Search

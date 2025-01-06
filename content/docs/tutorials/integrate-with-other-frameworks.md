@@ -2,7 +2,7 @@
 title: "和其他框架集成"
 date: 2024-12-23T16:28:44+08:00
 weight: 4
-next: qa/local-sdk
+next: docs/qa/local-sdk
 ---
 
 首先，amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handler 的实例。
