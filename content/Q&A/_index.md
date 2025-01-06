@@ -5,6 +5,6 @@ breadcrumbs: false
 ---
 
 {{< cards cols="1" >}}
-{{< card link="local-sdk" title="怎么使用本地 sdk" icon="chat-alt" >}}
+{{< card link="local-sdk" title="怎么从本地导入 sdk" icon="chat-alt" >}}
 {{< card link="middleware" title="怎么使用中间件" icon="chat-alt" >}}
 {{< /cards >}}

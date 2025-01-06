@@ -18,8 +18,7 @@ cascade:
 
 <div class="hx-mb-12">
 {{< hextra/hero-subtitle >}}
-  简洁而丰富的前端库<br />
-  由百度 amis 驱动
+  百度 amis 驱动，简洁而丰富的前端库
 {{< /hextra/hero-subtitle >}}
 </div>
 
