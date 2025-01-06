@@ -65,7 +65,7 @@ comp.Button().Primary(true).Label("Format").Transform("body", "body", "Done", fu
 > 这里有个小技巧：写本地代理服务来中转请求，这样可以简化前端代码。不然要在 组件里写 amis 的 api 对象，比较繁琐。而且本地代理服务也被 amisigo 封装了，比如这里的 transform 方法， 我们只需要实现数据转换的逻辑 compile 和 format， 而不用管前端是怎么调到这两个函数的。
 
 我们实现的 playground 效果如下：
-![gop-playground](gop-playground.png)
+![gop-playground](/gop-play.png)
 
 完整代码见：[amisgo-examples/gop-playground](https://github.com/zrcoder/amisgo-examples/tree/main/gop-playground)
 
