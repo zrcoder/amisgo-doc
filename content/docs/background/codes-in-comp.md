@@ -2,6 +2,7 @@
 title: "comp 目录下的代码"
 date: 2024-12-23T16:26:35+08:00
 weight: 3
+next: tutorials/quick-start
 ---
 
 ## 需要的代码

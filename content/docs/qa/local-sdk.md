@@ -2,6 +2,7 @@
 title: "怎么从本地导入 sdk"
 date: 2025-01-05T20:16:18+08:00
 weight: 1
+prev: tutorials/integrate-with-other-frameworks
 ---
 
 amisgo 默认通过 [cdn](https://cdn.jsdelivr.net/npm/amis) 加载依赖的 amis sdk ，这是推荐的方式；但如果你的网络访问 cdn 不稳定或有特别限制，那么可以从本地导入 sdk 。
