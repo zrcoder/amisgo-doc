@@ -73,8 +73,8 @@ params:
     displayToggle: true
   footer:
     enable: true
-    displayPoweredBy: true
-    displayCopyright: true
+    displayPoweredBy: false
+    displayCopyright: false
 
   comments:
     enable: false

@@ -41,9 +41,9 @@ func main() {
 		),
 	)
 
-	ag := amisgo.New().Mount("/", index).StaticFS("/static/", http.FS(static.FS))
+	app := amisgo.New().Mount("/", index).StaticFS("/static/", http.FS(static.FS))
 
-	err = ag.Run()
+	err = app.Run()
 	check(err)
 }
 
@@ -60,9 +60,9 @@ comp.Button().Primary(true).Label("Format").Transform("body", "body", "Done", fu
 }),
 ```
 
-其中 compile 和 format 的实现也非常简单，就是根据 form 请求中 body 的值，调用对应的 goplus 的 api，然后返回结果， amisgo 框架封装的 Transform 方法会自动把返回值渲染到 result 组件中。
+其中 compile 和 format 的实现也非常简单，就是根据 form 请求中 body 的值，调用对应的 goplus 的 api，然后返回结果， amisgo 封装的 Transform 方法会自动把返回值渲染到 result 组件中。
 
-> 这里有个小技巧：写本地代理服务来中转请求，这样可以简化前端代码。不然要在 组件里写 amis 的 api 对象，比较繁琐。而且本地代理服务也被 amisigo 封装了，比如这里的 transform 方法， 我们只需要实现数据转换的逻辑 compile 和 format， 而不用管前端是怎么调到这两个函数的。
+> 这里有个小技巧：写本地代理服务来中转请求，这样可以简化前端代码。不然要在组件里写 amis 的 api 对象，比较繁琐。而且本地代理服务也被 amisigo 封装了，比如这里的 transform 方法，我们只需要实现数据转换的逻辑 compile 和 format，而不用管前端是怎么调到这两个函数的。
 
 我们实现的 playground 效果如下：
 ![gop-playground](/gop-play.png)

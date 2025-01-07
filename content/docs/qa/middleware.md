@@ -42,12 +42,12 @@ func main() {
 			comp.InputPassword().Name("password"),
 		),
 	)
-	ag := amisgo.New().
+	app := amisgo.New().
 		Mount("/", index, checkAuthMiddleware, testMiddleware).
 		Mount(loginUrl, login).
 		HandleFunc(echoApiUrl, echo)
 
-	panic(ag.Run())
+	panic(app.Run(":8080"))
 }
 
 func checkAuthMiddleware(next http.Handler) http.Handler {

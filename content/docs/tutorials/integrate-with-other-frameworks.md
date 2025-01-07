@@ -22,11 +22,11 @@ func main() {
 		c.JSON(200, comp.SuccessResponse("", comp.Data{"date": time.Now()}))
 	})
 
-	ag := amisgo.New().
+	app := amisgo.New().
 		Handle(apiPrefix, g).
 		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-	panic(ag.Run("8888"))
+	panic(app.Run("8888"))
 }
 ```
 
@@ -40,11 +40,11 @@ func main() {
 		c.JSON(200, comp.SuccessResponse("", comp.Data{"date": time.Now()}))
 	})
 
-	ag := amisgo.New().
+	app := amisgo.New().
 		Handle(apiPrefix, g).
 		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-	http.Handle("/", ag)
+	http.Handle("/", app)
 	http.Handle(apiPrefix, g)
 	panic(http.ListenAndServe(":8888", nil))
 }
@@ -60,12 +60,12 @@ func main() {
 		c.JSON(200, comp.SuccessResponse("", comp.Data{"date": time.Now()}))
 	})
 
-	ag := amisgo.New().
+	app := amisgo.New().
 		Handle(apiPrefix, g).
 		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
 
 	g.GET("/", func(c *gin.Context) {
-		ag.ServeHTTP(c.Writer, c.Request)
+		app.ServeHTTP(c.Writer, c.Request)
 	})
 
 	panic(g.Run(":8888"))

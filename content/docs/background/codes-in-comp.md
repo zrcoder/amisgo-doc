@@ -7,7 +7,7 @@ next: docs/tutorials/quick-start
 
 ## 需要的代码
 
-comp 目录下的代码大同小异。
+comp 目录下的代码大同小异:
 
 1. 首先在 comp/base.go 定义了 Schema 类型， 底层为 map[strng]any：
 
@@ -21,12 +21,7 @@ type Schema  map[string]any
 type xxx Schema
 
 func XXX() xxx {
-  return xxx{}.set("type": "xxx")
-}
-
-func (x xxx) set(key string, value interface{}) xxx {
-  x[key] = value
-  return x
+  return xxx{"type": "xxx"}
 }
 ```
 
@@ -37,6 +32,15 @@ func (x xxx) Title(value string) xxx {
   return x.set("title", value)
 }
 ...
+```
+
+其中的辅助方法 set 如下：
+
+```go
+func (x xxx) set(key string, value any) xxx {
+  x[key] = value
+  return x
+}
 ```
 
 ## 怎么生成每个组件的属性方法

@@ -34,8 +34,8 @@ Go 开发者的前端库
 
 {{< hextra/feature-grid >}}
   {{< hextra/feature-card
-    title="轻如鸿毛"
-    subtitle="极简 API，纯 Go 语言开发，无需依赖 js。"
+    title="轻于鸿毛"
+    subtitle="极简 API，纯 Go 开发，无需 js。"
     image="gop-play.png"
 
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
@@ -44,8 +44,8 @@ Go 开发者的前端库
   >}}
   
   {{< hextra/feature-card
-    title="富若春花"
-    subtitle="简单易用，功能强大丰富。"
+    title="富似繁花"
+    subtitle="组件丰富，内置云舍、antd、ang、dark 主题。"
     image="dtoy.png"
     
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
@@ -53,8 +53,8 @@ Go 开发者的前端库
     style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
-    title="响应式布局，多种主题"
-    subtitle="适应不同屏幕。内置云舍、antd、ang、dark 主题。"
+    title="灵如游龙"
+    subtitle="标准 http.Handler, 易与其他框架集成。响应式布局，适应不同屏幕。"
     image="todo-app.png"
 
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
