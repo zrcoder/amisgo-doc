@@ -9,7 +9,7 @@ next: docs/tutorials/quick-start
 
 comp 目录下的代码大同小异:
 
-1. 首先在 comp/base.go 定义了 Schema 类型， 底层为 map[strng]any：
+1. 首先在 model 包定义了 Schema 类型， 底层为 map[strng]any：
 
 ```go
 type Schema  map[string]any
@@ -18,7 +18,7 @@ type Schema  map[string]any
 2. 组件基本定义
 
 ```go
-type xxx Schema
+type xxx model.Schema
 
 func XXX() xxx {
   return xxx{"type": "xxx"}

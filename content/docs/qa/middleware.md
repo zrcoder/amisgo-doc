@@ -26,6 +26,7 @@ import (
 
 	"github.com/zrcoder/amisgo"
 	"github.com/zrcoder/amisgo/comp"
+	"github.com/zrcoder/amisgo/model"
 	"github.com/zrcoder/amisgo/util"
 )
 
@@ -73,7 +74,7 @@ func testMiddleware(next http.Handler) http.Handler {
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
-	resp := comp.SuccessResponse("", comp.Data{"body": "Hello, amisgo!"})
+	resp := model.SuccessResponse("", model.Data{"body": "Hello, amisgo!"})
 	w.Write(resp.Json())
 }
 

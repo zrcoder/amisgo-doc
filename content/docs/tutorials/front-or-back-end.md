@@ -36,7 +36,7 @@ func main() {
 				),
 			),
 			comp.Editor().Language("c").Name("body").Size("xl").Value("${examples}").
-				AllowFullscreen(false).Options(comp.Schema{"fontSize": 15}),
+				AllowFullscreen(false).Options(model.Schema{"fontSize": 15}),
 			comp.Code().Name("result").Language("plaintext"),
 		),
 	)
