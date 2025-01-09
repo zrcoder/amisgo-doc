@@ -157,4 +157,4 @@ func (a action) Transform(src, dst, successMsg string, transfor func(input any) 
 
 实际上，我们还支持了多对多的 TransformMultiple 方法，可以实现从多个组件的输入值转换后渲染到多个组件。
 
-可以参考 [dev-toys](https://github.com/zrcoder/amisgo-examples/tree/main/dev-toys) 中的示例，其中的 convert 组件用了 Transform， 生成多种类型的 hash 值用了 TransformMultiple。
+可以参考 [示例库](https://github.com/zrcoder/amisgo-examples) 中的 dev-toys ，其中的 convert 组件用了 Transform， 生成多种类型的 hash 值用了 TransformMultiple。

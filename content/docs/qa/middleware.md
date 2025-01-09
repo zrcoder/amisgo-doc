@@ -84,3 +84,5 @@ func checkAuth(r *http.Request) bool {
 	return rand.Intn(2) == 0
 }
 ```
+
+你也可以参考 [示例库](https://github.com/zrcoder/amisgo-examples) todo-app 的实现，UI 和 Api 都用了鉴权中间件。

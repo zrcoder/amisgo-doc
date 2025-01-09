@@ -67,10 +67,10 @@ comp.Button().Primary(true).Label("Format").Transform("body", "body", "Done", fu
 我们实现的 playground 效果如下：
 ![gop-playground](/gop-play.png)
 
-完整代码见：[amisgo-examples/gop-playground](https://github.com/zrcoder/amisgo-examples/tree/main/gop-playground)
+完整代码见示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
 
 ## 前后端合一
 
 比如我们写一个 todo list 应用，前端用 amisgo，后端用 gin， 数据库用 sqlite。所有代码都在一个仓库中，部署也仅仅是一个二进制，非常方便。
 
-这个应用的代码见:[amisgo-examples/todo-app](https://github.com/zrcoder/amisgo-examples/tree/main/todo-app)。
+这个应用的代码见示例库:[amisgo-examples](https://github.com/zrcoder/amisgo-examples)。
