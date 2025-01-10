@@ -74,7 +74,7 @@ func testMiddleware(next http.Handler) http.Handler {
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
-	resp := model.SuccessResponse("", model.Data{"body": "Hello, amisgo!"})
+	resp := model.SuccessResponse("", model.Schema{"body": "Hello, amisgo!"})
 	w.Write(resp.Json())
 }
 

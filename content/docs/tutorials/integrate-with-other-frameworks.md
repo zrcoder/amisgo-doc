@@ -19,7 +19,7 @@ func main() {
 	dateApi := apiPrefix + date
 	g := gin.Default()
 	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Data{"date": time.Now()}))
+		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
 	})
 
 	app := amisgo.New().
@@ -37,7 +37,7 @@ func main() {
 	dateApi := apiPrefix + date
 	g := gin.Default()
 	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Data{"date": time.Now()}))
+		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
 	})
 
 	app := amisgo.New().
@@ -57,7 +57,7 @@ func main() {
 	dateApi := apiPrefix + date
 	g := gin.Default()
 	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Data{"date": time.Now()}))
+		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
 	})
 
 	app := amisgo.New().

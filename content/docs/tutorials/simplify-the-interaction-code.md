@@ -39,9 +39,9 @@ comp.Page().Body(
 显然这个代码非常啰嗦，amisgo 给 form 组件增加了一个新方法 Submit：
 
 ```go
-// Submit 设置表单提交后的回调逻辑，使用通用的 Data 类型处理表单数据
+// Submit 设置表单提交后的回调逻辑，使用通用的 Schema 类型处理表单数据
 // 适用于需要灵活处理表单提交的场景
-func (f form) Submit(callback func(model.Data) error) form
+func (f form) Submit(callback func(model.Schema) error) form
 ```
 
 这样一来，用户代码可以简化成如下：
@@ -51,7 +51,7 @@ comp.Page().Body(
 	comp.Form().Body(
 		comp.InputText().Label("姓名").Name("name"),
 		comp.InputEmail().Label("邮箱").Name("email"),
-	).Submit(func(m model.Data) error {
+	).Submit(func(m model.Schema) error {
 		name := m.Get("name")
 		email := m.Get("email")
 		// save name and email to db
@@ -103,7 +103,7 @@ func init() {
 		json.Unmarshal(input, &m)
 		// ...
 		output := "age: 27"
-		resp := model.Response{Msg: "转换成功", Data: model.Data{"output": output}} // 这里的key值必须是第二个编辑器的 name
+		resp := model.Response{Msg: "转换成功", Data: model.Schema{"output": output}} // 这里的key值必须是第二个编辑器的 name
 		data, _ := json.Marshal(resp)
 		w.Write(data)
 	})
