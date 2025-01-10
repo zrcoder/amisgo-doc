@@ -45,16 +45,18 @@ menu:
         icon: github
   sidebar:
     - identifier: more
-      name:
+      name: 参考
       params:
         type: separator
       weight: 1
     - identifier: amis
-      name: Baidu amis  ↗
+      name: Baidu amis
       weight: 11
       url: "https://aisuda.bce.baidu.com/amis"
-      params:
-        icon: external-link
+    - identifier: examples
+      name: Examples
+      weight: 12
+      url: "https://github.com/zrcoder/amisgo-examples"
 params:
   navbar:
     displayTitle: true
