@@ -2,6 +2,7 @@
 title: "设计原理"
 date: 2024-12-23T16:26:06+08:00
 weight: 2
+next: docs/tutorials/quick-start
 ---
 
 amisgo 是基于百度 [amis](https://aisuda.bce.baidu.com/amis) 的一个 Go 语言实现。amis 允许通过 JSON 配置来定义页面，而 amisgo 则进一步优化了这一做法，通过 Go 的类型系统定义各种组件，并将其转换为 JSON，最终通过 Go template 渲染出 amis SDK 支持的 HTML 页面。针对原生 amis 较复杂的交互部分，也增加了基于回调的简化方法。
