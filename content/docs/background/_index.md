@@ -8,5 +8,4 @@ breadcrumbs: false
 {{< cards cols="1">}}
 {{< card link="dev-frontend-with-go" title="用 Go 写前端"  icon="card" >}}
 {{< card link="design-principle" title="设计原理" icon="card" >}}
-{{< card link="codes-in-comp" title="comp 目录下的代码" icon="card" >}}
 {{< /cards >}}

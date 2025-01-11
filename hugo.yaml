@@ -50,11 +50,11 @@ menu:
         type: separator
       weight: 1
     - identifier: amis
-      name: Baidu amis
+      name: 百度 amis
       weight: 11
       url: "https://aisuda.bce.baidu.com/amis"
     - identifier: examples
-      name: Examples
+      name: 示例代码
       weight: 12
       url: "https://github.com/zrcoder/amisgo-examples"
 params:

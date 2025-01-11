@@ -4,11 +4,11 @@ date: 2024-12-23T16:24:49+08:00
 weight: 1
 ---
 
-这里的前端或称客户端，指 terminal、手机、pc 桌面及浏览器 web 应用，凡有用户交互的地方皆可称也。
+这里的前端或称客户端，指 终端、手机、pc 桌面及浏览器 web 应用，凡有用户交互的地方皆可称也。
 
-前端并非 Go 擅场， 这里仅分享个人相关经历体会。
+前端并非 Go 擅场，但也独具特色，这里仅分享个人相关经历体会。
 
-## TUI
+## 终端（TUI）
 
 Terminal UI，终端上的 UI，也就是命令行客户端。
 
@@ -41,7 +41,7 @@ hugo serve
 
 手机、平板、电脑等桌面 UI，基本一种操作系统就有一种编程语言和框架来做。如 iOS/MacOS 的 objective-c/swift 语言和 cocoas 框架，Android 的 Java/Kotlin 语言与 SDK，windows 我只知道古早的 mfc 框架，学生时代在图书馆的书上看到的（书籍并不太适合传承编程知识，效率太低，不过不影响当时的探究热情，当时都没有自己的电脑）。
 
-也有一些框架试图统一，如 Flutter、Qt、React Native 等，实际上并不怎么成功，没普及起来，各种系统的差异给类似的框架带来巨大挑战。Go 语言方面有两个库值得一提：fyne 和 wails，fyne 可类比 Qt，wails 可类比 Electron，都不怎么成熟。比如 fyne 中并没有类似 monaco-editor （js 生态编辑器库，vscode 就用该组件）的组件，如果从头写一个，就太费劲了。wails 是把 js 和 go 合并了，是个小小创新，可以在其官网看看它的工作原理： https://wails.io/zh-Hans/docs/howdoesitwork 。但这样的意义可能并不大，首先不比前后分离的主流做法强多少，其次也不比 Electron 强多少。
+也有一些框架试图统一，如 Flutter、Qt、React Native 等，实际上并不怎么成功，没普及起来，各种系统的差异给类似的框架带来巨大挑战。Go 语言方面有两个库值得一提：fyne 和 wails。fyne 可类比 Qt，wails 可类比 Electron，都不怎么成熟。比如 fyne 中并没有类似 monaco-editor （js 生态编辑器库，vscode 就用该组件）的组件，如果从头写一个，就太费劲了。wails 有个创新，能自动生成 Go 对应的 js 方法供前端调用，可以在其官网看看它的工作原理： https://wails.io/zh-Hans/docs/howdoesitwork 。但这样的意义可能并不大，首先不比前后分离的主流做法强多少，其次也不比 Electron 强多少。
 
 ## Web UI
 

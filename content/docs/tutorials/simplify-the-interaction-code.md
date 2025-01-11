@@ -4,157 +4,170 @@ date: 2024-12-23T16:28:01+08:00
 weight: 3
 ---
 
-## Api，InitApi
+## 1. Api 与 InitApi 的优化
 
-假设我们页面有一个表单，用户输入信息，点击提交后我们需要把信息存入数据库。
+假设我们有一个表单页面，用户输入信息后点击提交，我们需要将信息存入数据库。
 
-借助 form 组件的 Api 方法，可以这样做：
+### 传统方式
+
+使用 `form` 组件的 `Api` 方法，代码可能如下：
 
 ```go
 func init() {
     http.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-                input, _ := io.ReadAll(r.Body)
-                defer r.Body.Close()
+        input, _ := io.ReadAll(r.Body)
+        defer r.Body.Close()
 
-				m := map[string]any{}
-                json.Unmarsharl(input, &m)
+        m := map[string]any{}
+        json.Unmarshal(input, &m)
 
-                name := m["name"]
-                email := m["email"]
-                // save the user into db ...
-
-	})
+        name := m["name"]
+        email := m["email"]
+        // 将用户信息存入数据库 ...
+    })
 }
 
-...
-
 comp.Page().Body(
-	comp.Form().Api("/user").Body(
-		comp.InputText().Label("姓名").Name("name"),
-		comp.InputEmail().Label("邮箱").Name("email"),
-	),
+    comp.Form().Api("/user").Body(
+        comp.InputText().Label("姓名").Name("name"),
+        comp.InputEmail().Label("邮箱").Name("email"),
+    ),
 )
 ```
 
-显然这个代码非常啰嗦，amisgo 给 form 组件增加了一个新方法 Submit：
+### 优化方式
+
+`amisgo` 为 `form` 组件新增了 `Submit` 方法，简化了代码：
 
 ```go
-// Submit 设置表单提交后的回调逻辑，使用通用的 Schema 类型处理表单数据
-// 适用于需要灵活处理表单提交的场景
 func (f form) Submit(callback func(model.Schema) error) form
 ```
 
-这样一来，用户代码可以简化成如下：
+优化后的代码如下：
 
 ```go
 comp.Page().Body(
-	comp.Form().Body(
-		comp.InputText().Label("姓名").Name("name"),
-		comp.InputEmail().Label("邮箱").Name("email"),
-	).Submit(func(m model.Schema) error {
-		name := m.Get("name")
-		email := m.Get("email")
-		// save name and email to db
-		// ...
-                return nil
-	}),
+    comp.Form().Body(
+        comp.InputText().Label("姓名").Name("name"),
+        comp.InputEmail().Label("邮箱").Name("email"),
+    ).Submit(func(m model.Schema) error {
+        name := m.Get("name")
+        email := m.Get("email")
+        // 将 name 和 email 存入数据库
+        // ...
+        return nil
+    }),
 )
 ```
 
-> 同样还有个 SubmitTo 方法，使用具体类型处理表单数据
+> 此外，另有 `SubmitTo` 方法允许使用具体类型处理表单数据：
 >
 > ```go
 > func (f form) SubmitTo(receiver any, callback func(any) error) form
 > ```
 
-类似地，我们包装了 page 组件的 InitApi，增加 InitData 方法：
+### InitData 方法
+
+类似地，`page` 组件的 `InitApi` 也有对应的优化方法 `InitData`：
 
 ```go
 func (p page) InitData(getter func() (any, error)) page
 ```
 
-这样，用户写页面获取当前时间的代码就简化成了：
+例如，获取当前时间的代码可以简化为：
 
 ```go
-    comp.Page().
-	Title("标题").
-	Body("内容部分. 可以使用 \\${var} 获取变量。如: `\\$date`: ${date}").
-	InitData(getDate)
+comp.Page().
+    Title("标题").
+    Body("内容部分. 可以使用 \\${var} 获取变量。如: `\\$date`: ${date}").
+    InitData(getDate)
 
 func getDate() (any, error) {
-	y, m, d := time.Now().Date()
-	mm := time.Now().UnixNano()
-	return map[string]string{"date": fmt.Sprintf("%d-%d-%d %d", y, m, d, mm)}, nil
+    y, m, d := time.Now().Date()
+    mm := time.Now().UnixNano()
+    return map[string]string{"date": fmt.Sprintf("%d-%d-%d %d", y, m, d, mm)}, nil
 }
 ```
 
-## Action 按钮
+## 2. Action 按钮的优化
 
-假设页面有两个编辑器，第一个用于输入 json，第二个是只读的，当点击按钮后，以第一个编辑器的内容作为输入，转换为 yaml，渲染到第二个编辑器中，怎么做呢？
+假设页面有两个编辑器，第一个用于输入 JSON，第二个是只读的。点击按钮后，将第一个编辑器的内容转换为 YAML，并渲染到第二个编辑器中。
 
-直接借助 ajax 类型的行为按钮，可以这么写：
+### 传统方式
+
+使用 `ajax` 类型的行为按钮，代码如下：
 
 ```go
 func init() {
-	http.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
-		input, _ := io.ReadAll(r.Body)
-		defer r.Body.Close()
-		m := map[string]any{}
-		json.Unmarshal(input, &m)
-		// ...
-		output := "age: 27"
-		resp := model.Response{Msg: "转换成功", Data: model.Schema{"output": output}} // 这里的key值必须是第二个编辑器的 name
-		data, _ := json.Marshal(resp)
-		w.Write(data)
-	})
+    http.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
+        input, _ := io.ReadAll(r.Body)
+        defer r.Body.Close()
+        m := map[string]any{}
+        json.Unmarshal(input, &m)
+        // ...
+        output := "age: 27"
+        resp := model.Response{Msg: "转换成功", Data: model.Schema{"output": output}} // 这里的 key 值必须是第二个编辑器的 name
+        data, _ := json.Marshal(resp)
+        w.Write(data)
+    })
 }
 
 func main() {
-	index := comp.Page().Body(
-		comp.Form().ColumnCount(2).Body(
-			comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-			comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
-		).Actions(
-			comp.Action().Label("Convert").Level("primary").ActionType("ajax").Api(
-				model.Schema{
-					"url":  "/convert",
-					"data": model.Schema{"input": "${input}"},
-					"responses": model.Schema{
-						"200": model.Schema{
-							"then": model.Schema{
-								"actionType": "setValue",
-								"args": model.Schema{
-									"value": "${response}",
-								},
-							},
-						},
-					},
-				},
-			),
-...
+    index := comp.Page().Body(
+        comp.Form().ColumnCount(2).Body(
+            comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
+            comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
+        ).Actions(
+            comp.Action().Label("Convert").Level("primary").ActionType("ajax").Api(
+                model.Schema{
+                    "url":  "/convert",
+                    "data": model.Schema{"input": "${input}"},
+                    "responses": model.Schema{
+                        "200": model.Schema{
+                            "then": model.Schema{
+                                "actionType": "setValue",
+                                "args": model.Schema{
+                                    "value": "${response}",
+                                },
+                            },
+                        },
+                    },
+                },
+            ),
+        ),
+    )
+}
 ```
 
-显然，这也比较啰嗦，我们为行为按钮新增了 Transform 方法：
+### 优化方式
+
+`amisgo` 为行为按钮新增了 `Transform` 方法：
 
 ```go
-func (a action) Transform(src, dst, successMsg string, transfor func(input any) (any, error)) action
+func (a action) Transform(transform func(input any) (any, error), src, dst string) action
 ```
 
-上面的代码就可以简化成：
+优化后的代码如下：
 
 ```go
-    comp.Page().Body(
-	comp.Form().ColumnCount(2).Body(
-	    comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-	    comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
-	).Actions(
-	    comp.Action().Label("Converrt").Level("primary").Transform("input", "output", "转换成功", func(input any) (any, error) {
-		// transform input json to yaml
-		output := "age: 27"
-		return output, nil
-	}),
+comp.Page().Body(
+    comp.Form().ColumnCount(2).Body(
+        comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
+        comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
+    ).Actions(
+        comp.Action().Label("Convert").Level("primary").Transform(func(input any) (any, error) {
+            // 将输入的 JSON 转换为 YAML
+            output := "age: 27"
+            return output, nil
+        }, "input", "output"),
+    ),
+)
 ```
 
-实际上，我们还支持了多对多的 TransformMultiple 方法，可以实现从多个组件的输入值转换后渲染到多个组件。
+### 多对多转换
 
-可以参考 [示例库](https://github.com/zrcoder/amisgo-examples) 中的 dev-toys ，其中的 convert 组件用了 Transform， 生成多种类型的 hash 值用了 TransformMultiple。
+另有 `TransformMultiple` 方法支持从多个组件的输入值转换后渲染到多个组件。可以参考 [示例库](https://github.com/zrcoder/amisgo-examples) 中的 dev-toys，其中的 convert 组件使用了 Transform，生成多种类型的 hash 值使用了 TransformMultiple。
+
+---
+
+通过以上优化，代码变得更加简洁易读，减少了冗余的 HTTP 请求处理逻辑，提升了开发效率。

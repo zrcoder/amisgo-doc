@@ -20,8 +20,7 @@ Go 开发者的前端库
 {{< hextra/feature-grid >}}
 
 <div>
-<img src="logo-with-text.svg" />
-<!-- {{< icon name="arrow-circle-left" attributes="height=14" >}} -->
+    <img src="logo-with-text.svg" alt="amisgo logo" />
 </div>
 
 

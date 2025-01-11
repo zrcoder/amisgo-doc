@@ -4,9 +4,9 @@ date: 2025-01-05T20:17:29+08:00
 weight: 2
 ---
 
-假设我们做一个需要登录的 app，在浏览器访问任意页面，需要先鉴权，鉴权失败则重定向到登录页面。显然这里用中间件较好。
+假设要做一个有用户系统的应用，访问页面时需先鉴权，失败则重定向到登录页。使用中间件是实现此功能的理想方式。
 
-Egine 结构的 Mount、Handle 和 HandleFunc 方法均支持中间件，函数签名如下：
+Egine 的 `Mount`、`Handle` 和 `HandleFunc` 方法均支持中间件：
 
 ```go
 func (e *Engine) Mount(path string, component any, middlewares ...func(http.Handler) http.Handler) *Engine
@@ -14,7 +14,7 @@ func (e *Engine) Handle(path string, handler http.Handler, middlewares ...func(h
 func (e *Engine) HandleFunc(path string, handler http.HandlerFunc, middlewares ...func(http.Handler) http.Handler) *Engine
 ```
 
-一个简单的 demo 代码如下：
+#### 示例代码
 
 ```go
 package main
@@ -51,9 +51,9 @@ func main() {
 	panic(app.Run(":8080"))
 }
 
+// 鉴权检查，失败则重定向到登录页。
 func checkAuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Pre-processing actions, such as logging access, authentication, etc.
 		fmt.Println("check auth middleware")
 		if r.URL.Path != loginUrl && !checkAuth(r) {
 			util.Redirect(w, r, loginUrl, http.StatusTemporaryRedirect)
@@ -63,12 +63,12 @@ func checkAuthMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+// 测试中间件，设置响应头并记录调试信息。
 func testMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("test middleware")
 		w.Header().Set("test", "test heander value")
 		next.ServeHTTP(w, r)
-		// Post-processing actions, such as logging debug information
 		fmt.Println("response heander for [test]:", w.Header().Get("test"))
 	})
 }
@@ -79,10 +79,9 @@ func echo(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkAuth(r *http.Request) bool {
-	// Parse the token from the request and process authentication.
-	// This is just a demonstration; it randomly returns the authentication result.
-	return rand.Intn(2) == 0
+	return rand.Intn(2) == 0 // 随机返回鉴权结果
 }
 ```
 
-你也可以参考 [示例库](https://github.com/zrcoder/amisgo-examples) todo-app 的实现，UI 和 Api 都用了鉴权中间件。
+#### 参考
+更多实现可参考 [示例库](https://github.com/zrcoder/amisgo-examples) 中的 `todo-app`。

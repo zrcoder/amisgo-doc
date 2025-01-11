@@ -5,69 +5,107 @@ weight: 4
 next: docs/qa/local-sdk
 ---
 
-首先，amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handler 的实例。
+amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handler 的实例; 同时，其 Engine 也是一个标准的 http.Handler, 可方便集成进其他框架。
 
-假设我们的 UI 部分用 amisgo 定义，api 部分可以用标准库也可以用三方库比如 gin 来实现，可以这样写：
+我们来看看三种示例：
 
-```go
-const (
-	apiPrefix = "/api/"
-	date      = "date"
-)
+### 1. 使用 `Handle` 方法集成 gin
 
-func main() {
-	dateApi := apiPrefix + date
-	g := gin.Default()
-	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
-	})
-
-	app := amisgo.New().
-		Handle(apiPrefix, g).
-		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
-
-	panic(app.Run("8888"))
-}
-```
-
-又因为 amisgo 的 Egine 本身是一个 http.Handler，所以可以这样写:
+假设 UI 部分由 amisgo 定义，而 API 部分使用 gin 实现。可以通过 `Handle` 方法将 gin 的路由挂载到 amisgo 中。
 
 ```go
 func main() {
-	dateApi := apiPrefix + date
-	g := gin.Default()
-	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
-	})
+    const (
+        apiPrefix = "/api/"
+        datePath  = "date"
+    )
+    dateApi := apiPrefix + datePath
 
-	app := amisgo.New().
-		Handle(apiPrefix, g).
-		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+    // 初始化 gin
+    g := gin.Default()
+    g.GET(dateApi, func(c *gin.Context) {
+        c.JSON(200, gin.H{"date": time.Now()})
+    })
 
-	http.Handle("/", app)
-	http.Handle(apiPrefix, g)
-	panic(http.ListenAndServe(":8888", nil))
+    // 初始化 amisgo
+    app := amisgo.New().
+        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
+        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+
+    // 启动服务
+    panic(app.Run(":8888"))
 }
 ```
 
-还可以将 amisgo 的 Engine 包装为 gin.HandlerFunc：
+---
+
+### 2. 将 amisgo 作为 `http.Handler` 使用
+
+amisgo 的 `Engine` 本身实现了 `http.Handler` 接口，因此可以直接与标准库的 `http` 包集成。
 
 ```go
 func main() {
-	dateApi := apiPrefix + date
-	g := gin.Default()
-	g.GET(dateApi, func(c *gin.Context) {
-		c.JSON(200, model.SuccessResponse("", model.Schema{"date": time.Now()}))
-	})
+    const (
+        apiPrefix = "/api/"
+        datePath  = "date"
+    )
+    dateApi := apiPrefix + datePath
 
-	app := amisgo.New().
-		Handle(apiPrefix, g).
-		Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+    // 初始化 gin
+    g := gin.Default()
+    g.GET(dateApi, func(c *gin.Context) {
+        c.JSON(200, gin.H{"date": time.Now()})
+    })
 
-	g.GET("/", func(c *gin.Context) {
-		app.ServeHTTP(c.Writer, c.Request)
-	})
+    // 初始化 amisgo
+    app := amisgo.New().
+        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
+        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-	panic(g.Run(":8888"))
+    // 使用标准库的 http 包
+    http.Handle("/", app)
+    http.Handle(apiPrefix, g)
+    panic(http.ListenAndServe(":8888", nil))
 }
 ```
+
+---
+
+### 3. 将 amisgo 包装为 gin 的 `HandlerFunc`
+
+如果希望以 gin 为主框架，可以将 amisgo 的 `Engine` 包装为 gin 的 `HandlerFunc`，并在 gin 中处理请求。
+
+```go
+func main() {
+    const (
+        apiPrefix = "/api/"
+        datePath  = "date"
+    )
+    dateApi := apiPrefix + datePath
+
+    // 初始化 gin
+    g := gin.Default()
+    g.GET(dateApi, func(c *gin.Context) {
+        c.JSON(200, gin.H{"date": time.Now()})
+    })
+
+    // 初始化 amisgo
+    app := amisgo.New().
+        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
+        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+
+    // 将 amisgo 包装为 gin 的 HandlerFunc
+    g.GET("/", func(c *gin.Context) {
+        app.ServeHTTP(c.Writer, c.Request)
+    })
+
+    // 启动 gin
+    panic(g.Run(":8888"))
+}
+```
+
+---
+
+### 总结
+
+通过以上方式，amisgo 可以灵活地与 gin 或其他框架集成，满足不同场景的需求。无论是将 amisgo 作为主框架，还是将其嵌入到其他框架中，都能轻松实现。

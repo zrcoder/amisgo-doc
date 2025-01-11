@@ -4,73 +4,78 @@ date: 2024-12-23T16:27:19+08:00
 weight: 2
 ---
 
-可以用 amisgo 写纯前端，需要的后端是额外的服务器，这样会是传统的前后端分离的模式。但我们更推荐用 amisgo 写前后端合一的项目，这样技术栈更统一， 实际部署也仅仅是一个进程，而不是前后端各一个进程。
+在使用 amisgo 进行开发时，可以选择两种主要模式：纯前端模式和前后端合一模式。本文将探讨这两种模式的优缺点。
 
-## 纯前端
+## 纯前端模式
 
-比如我们来仿写下 [Go+ 的 playground](https://play.goplus.org) 。
+在纯前端模式下，amisgo 主要用于编写前端代码，而后端服务则由额外的服务器提供。这种模式遵循传统的前后端分离架构。
 
-主要实现 `Run` 和 `Format` 两个功能。我们用 amisgo 主要写前端代码，实际的编译调 https://play.goplus.org 已有的 api。
+### 示例：仿写 Go+ Playground
 
-主要代码如下：
+我们以仿写 [Go+ Playground](https://play.goplus.org) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go+ Playground 的现有 API 实现。
+
+### 主要代码
 
 ```go
-func main() {
-	examples, defaultExample, err := example.Get()
-	check(err)
-
-	index := comp.Page().Body(
-		comp.Form().WrapWithPanel(false).Body(
+index := comp.Page().Body(
+	comp.Form().WrapWithPanel(false).Body(
+		comp.Flex().Justify("space-between").Items(
 			comp.Group().Mode("inline").Body(
 				comp.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
 				comp.InputGroup().Body(
-					comp.Button().Primary(true).Label("Run").Transform("body", "result", "Done", func(input any) (any, error) {
+					comp.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
 						return compile(input.(string))
-					}),
-					comp.Button().Primary(true).Label("Format").Transform("body", "body", "Done", func(input any) (any, error) {
+					}, "body", "result"),
+					comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
 						return format(input.(string))
-					}),
+					}, "body", "body"),
 				),
 				comp.Select().Name("examples").Value(defaultExample).Options(
 					examples...,
 				),
 			),
-			comp.Editor().Language("c").Name("body").Size("xl").Value("${examples}").
-				AllowFullscreen(false).Options(model.Schema{"fontSize": 15}),
-			comp.Code().Name("result").Language("plaintext"),
+			comp.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
 		),
-	)
-
-	app := amisgo.New().Mount("/", index).StaticFS("/static/", http.FS(static.FS))
-
-	err = app.Run()
-	check(err)
-}
-
+		comp.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
+			AllowFullscreen(false).Options(model.Schema{"fontSize": 15}),
+		comp.Code().Name("result").Language("plaintext"),
+	),
+)
 ```
 
-注意其中两个主要按钮的 transform 代码：
+### 关键点解析
+
+- **Transform 方法**：`Run` 和 `Format` 按钮的 `Transform` 方法用于处理用户输入并调用相应的 API。`compile` 和 `format` 函数负责与 Go+ Playground 的 API 交互，并将结果返回给前端。
 
 ```go
-comp.Button().Primary(true).Label("Run").Transform("body", "result", "Done", func(input any) (any, error) {
-    return compile(input.(string))
-}),
-comp.Button().Primary(true).Label("Format").Transform("body", "body", "Done", func(input any) (any, error) {
-    return format(input.(string))
-}),
+comp.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
+	return compile(input.(string))
+}, "body", "result"),
+comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
+	return format(input.(string))
+}, "body", "body"),
 ```
 
-其中 compile 和 format 的实现也非常简单，就是根据 form 请求中 body 的值，调用对应的 goplus 的 api，然后返回结果， amisgo 封装的 Transform 方法会自动把返回值渲染到 result 组件中。
+- **本地代理服务**：通过本地代理服务中转请求，可以简化前端代码，避免在组件中直接编写 API 调用逻辑。
 
-> 这里有个小技巧：写本地代理服务来中转请求，这样可以简化前端代码。不然要在组件里写 amis 的 api 对象，比较繁琐。而且本地代理服务也被 amisigo 封装了，比如这里的 transform 方法，我们只需要实现数据转换的逻辑 compile 和 format，而不用管前端是怎么调到这两个函数的。
+### 效果展示
 
-我们实现的 playground 效果如下：
-![gop-playground](/gop-play.png)
+![Go+ Playground 效果图](/gop-play.png)
 
-完整代码见示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
+完整代码请参考示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
 
-## 前后端合一
+## 前后端合一模式
 
-比如我们写一个 todo list 应用，前端用 amisgo，后端用 gin， 数据库用 sqlite。所有代码都在一个仓库中，部署也仅仅是一个二进制，非常方便。
+在前后端合一模式下，前后端代码都是 Go 语言写的，所有代码都位于同一个仓库中，结合 Go 的 embed 特性，部署时也仅需一个二进制文件。
 
-这个应用的代码见示例库:[amisgo-examples](https://github.com/zrcoder/amisgo-examples)。
+### 示例：Todo List 应用
+
+我们以一个简单的 Todo List 应用为例，前端用 amisgo 编写，后端则使用 gin 库，数据库采用 SQLite，展示如何实现前后端合一模式。
+
+代码请参考示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
+
+
+## 总结
+
+- **纯前端模式**：适合需要与现有后端服务集成的场景，遵循传统的前后端分离架构。
+- **前后端合一模式**：适合小型项目或需要简化部署流程的场景，技术栈统一，部署简便。
