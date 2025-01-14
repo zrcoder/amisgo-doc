@@ -84,4 +84,4 @@ func checkAuth(r *http.Request) bool {
 ```
 
 #### 参考
-更多实现可参考 [示例库](https://github.com/zrcoder/amisgo-examples) 中的 `todo-app`。
+更多实现可参考示例库中的 todo-app 。

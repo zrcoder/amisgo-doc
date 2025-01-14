@@ -8,4 +8,5 @@ weight: 3
 {{< cards cols="1" >}}
 {{< card link="local-sdk" title="怎么导入本地 SDK" icon="chat-alt" >}}
 {{< card link="middleware" title="怎么使用中间件" icon="chat-alt" >}}
+{{< card link="multiple-themes" title="怎么支持多主题切换" icon="chat-alt" >}}
 {{< /cards >}}

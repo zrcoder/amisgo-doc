@@ -62,7 +62,7 @@ comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, erro
 
 ![Go+ Playground 效果图](/gop-play.png)
 
-完整代码请参考示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
+完整代码请参考示例库。
 
 ## 前后端合一模式
 
@@ -72,7 +72,7 @@ comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, erro
 
 我们以一个简单的 Todo List 应用为例，前端用 amisgo 编写，后端则使用 gin 库，数据库采用 SQLite，展示如何实现前后端合一模式。
 
-代码请参考示例库：[amisgo-examples](https://github.com/zrcoder/amisgo-examples)
+代码请参考示例库。
 
 
 ## 总结
