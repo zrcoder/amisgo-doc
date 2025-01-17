@@ -1,7 +1,14 @@
 baseURL: https://amisgo.pages.dev/
+title: amisgo
+
 defaultContentLanguage: zh-cn
 languageCode: zh-CN
-title: amisgo
+languages:
+  zh-cn:
+    languageName: 简体中文
+    languageCode: zh-CN
+    weight: 1
+    title: amisgo
 
 module:
   imports:
@@ -58,6 +65,7 @@ menu:
       weight: 12
       url: "https://github.com/zrcoder/amisgo-examples"
 params:
+  description: amisgo, gophers' freind to develop frontend.
   navbar:
     displayTitle: true
     displayLogo: true
