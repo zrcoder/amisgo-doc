@@ -4,7 +4,7 @@ layout: hextra-home
 
 <div class="hx-mb-12">
 {{< hextra/hero-headline >}}
-Go 开发者的前端库
+Go 开发者的前端伙伴
 {{< /hextra/hero-headline >}}
 </div>
 
@@ -33,7 +33,7 @@ Go 开发者的前端库
 
 {{< hextra/feature-grid >}}
   {{< hextra/feature-card
-    title="轻于鸿毛"
+    title="轻巧"
     subtitle="极简 API，纯 Go 开发，无需 js。"
     image="gop-play.png"
 
@@ -43,7 +43,7 @@ Go 开发者的前端库
   >}}
 
   {{< hextra/feature-card
-    title="富似繁花"
+    title="丰富"
     subtitle="组件丰富，内置云舍、antd、ang、dark 主题。"
     image="dtoy.png"
 
@@ -52,7 +52,7 @@ Go 开发者的前端库
     style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
-    title="灵如游龙"
+    title="灵动"
     subtitle="标准 http.Handler, 易与其他框架集成。响应式布局，适应不同屏幕。"
     image="todo-app.png"
 
