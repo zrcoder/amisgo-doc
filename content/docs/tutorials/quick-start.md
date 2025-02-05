@@ -22,20 +22,19 @@ package main
 
 import (
 	"github.com/zrcoder/amisgo"
-	"github.com/zrcoder/amisgo/comp"
 )
 
 func main() {
-	index := comp.Page().Title("amisgo").Body(
-		comp.Form().
+	app := amisgo.New()
+	index := app.Page().Title("amisgo").Body(
+		app.Form().
 			Api("https://xxx/api/saveForm").
 			Body(
-				comp.InputText().Label("姓名").Name("name"),
-				comp.InputEmail().Label("邮箱").Name("email"),
+				app.InputText().Label("姓名").Name("name"),
+				app.InputEmail().Label("邮箱").Name("email"),
 			),
 	)
-
-	app := amisgo.New().Mount("/", index)
+	app.Mount("/", index)
 
 	panic(app.Run(":8080"))
 }

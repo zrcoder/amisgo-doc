@@ -31,29 +31,20 @@ amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 
 假设要做一个有用户系统的应用，访问页面时需先鉴权，失败则重定向到登录页。使用中间件是实现此功能的理想方式。
 
-Egine 的 `Mount`、`Handle` 和 `HandleFunc` 方法均支持中间件：
+Egine 的 `Mount`、`Handle` 和 `HandleFunc` 方法均支持中间件，示例代码如下：
 
 ```go
-func (e *Engine) Mount(path string, component any, middlewares ...func(http.Handler) http.Handler) *Engine
-func (e *Engine) Handle(path string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) *Engine
-func (e *Engine) HandleFunc(path string, handler http.HandlerFunc, middlewares ...func(http.Handler) http.Handler) *Engine
-```
-
-示例代码如下
-
-```go
-
 func main() {
-	index := comp.Page().InitApi(echoApiUrl).Body("${body}")
-	login := comp.Page().Body(
-		comp.Form().Body(
-			comp.InputEmail().Name("user"),
-			comp.InputPassword().Name("password"),
+	app := amisgo.New()
+	index := app.Page().InitApi(echoApiUrl).Body("${body}")
+	login := app.Page().Body(
+		app.Form().Body(
+			app.InputEmail().Name("user"),
+			app.InputPassword().Name("password"),
 		),
 	)
-	app := amisgo.New().
-		Mount("/", index, checkAuthMiddleware, testMiddleware).
-		Mount( "/login", login)
+	app.Mount("/", index, checkAuthMiddleware, testMiddleware)
+	app.Mount("/login", login)
 
 	panic(app.Run(":8080"))
 }
@@ -92,14 +83,12 @@ func checkAuth(r *http.Request) bool {
 amisgo 支持 amis 的四种内置主题：云舍、antd、ang 和 dark。您可以配置使用其中多个主题，并在页面添加 ThemeSelect 或 ThemeButtonGroupSelect 来支持用户切换主题。
 
 ```go
-	amisgo.New(
-		conf.WithThemes(conf.ThemeCxd, conf.ThemeDark),
-	).
-		Mount("/", comp.Page().Body(
-			comp.ThemeButtonGroupSelect(),
-			"Hello, World!",
-		)).
-		Run(":8888")
+app := amisgo.New(conf.WithThemes(conf.ThemeCxd, conf.ThemeDark))
+app.Mount("/", app.Page().Body(
+	app.ThemeButtonGroupSelect(),
+	"Hello, World!",
+))
+app.Run(":8888")
 ```
 
 实际的例子可以参考示例库的 dev-topys 和 todp-app 。
@@ -115,9 +104,9 @@ const amisJSON = `{
     "body": "Hello World!"
 }`
 
-amisgo.New().
-    Mount("/", json.RawMessage(amisJSON)).
-    Run(":8080")
+app := amisgo.New()
+app.Mount("/", json.RawMessage(amisJSON))
+app.Run(":8080")
 ```
 
 > 注意把 string 转成 json.RawMessage
@@ -129,8 +118,8 @@ amisgo.New().
 var index json.RawMessage
 
 func main() {
-	amisgo.New().
-		Mount("/", index).
-		Run(":8080")
+	app := amisgo.New()
+	app.Mount("/", index)
+	app.Run(":8080")
 }
 ```

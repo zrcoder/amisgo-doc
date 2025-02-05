@@ -17,28 +17,28 @@ weight: 2
 ### 主要代码
 
 ```go
-index := comp.Page().Body(
-	comp.Form().WrapWithPanel(false).Body(
-		comp.Flex().Justify("space-between").Items(
-			comp.Group().Mode("inline").Body(
-				comp.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
-				comp.InputGroup().Body(
-					comp.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
+app.Page().Body(
+	app.Form().WrapWithPanel(false).Body(
+		app.Flex().Justify("space-between").Items(
+			app.Group().Mode("inline").Body(
+				app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
+				app.InputGroup().Body(
+					app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
 						return compile(input.(string))
 					}, "body", "result"),
-					comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
+					app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
 						return format(input.(string))
 					}, "body", "body"),
 				),
-				comp.Select().Name("examples").Value(defaultExample).Options(
+				app.Select().Name("examples").Value(defaultExample).Options(
 					examples...,
 				),
 			),
-			comp.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
+			app.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
 		),
-		comp.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
+		app.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
 			AllowFullscreen(false).Options(model.Schema{"fontSize": 15}),
-		comp.Code().Name("result").Language("plaintext"),
+		app.Code().Name("result").Language("plaintext"),
 	),
 )
 ```
@@ -48,10 +48,10 @@ index := comp.Page().Body(
 - **Transform 方法**：`Run` 和 `Format` 按钮的 `Transform` 方法用于处理用户输入并调用相应的 API。`compile` 和 `format` 函数负责与 Go+ Playground 的 API 交互，并将结果返回给前端。
 
 ```go
-comp.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
+app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
 	return compile(input.(string))
 }, "body", "result"),
-comp.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
+app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
 	return format(input.(string))
 }, "body", "body"),
 ```

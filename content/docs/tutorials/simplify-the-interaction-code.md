@@ -27,10 +27,10 @@ func init() {
     })
 }
 
-comp.Page().Body(
-    comp.Form().Api("/user").Body(
-        comp.InputText().Label("姓名").Name("name"),
-        comp.InputEmail().Label("邮箱").Name("email"),
+app.Page().Body(
+    app.Form().Api("/user").Body(
+        app.InputText().Label("姓名").Name("name"),
+        app.InputEmail().Label("邮箱").Name("email"),
     ),
 )
 ```
@@ -46,10 +46,10 @@ func (f form) Submit(callback func(model.Schema) error) form
 优化后的代码如下：
 
 ```go
-comp.Page().Body(
-    comp.Form().Body(
-        comp.InputText().Label("姓名").Name("name"),
-        comp.InputEmail().Label("邮箱").Name("email"),
+app.Page().Body(
+    app.Form().Body(
+        app.InputText().Label("姓名").Name("name"),
+        app.InputEmail().Label("邮箱").Name("email"),
     ).Submit(func(m model.Schema) error {
         name := m.Get("name")
         email := m.Get("email")
@@ -77,7 +77,7 @@ func (p page) InitData(getter func() (any, error)) page
 例如，获取当前时间的代码可以简化为：
 
 ```go
-comp.Page().
+app.Page().
     Title("标题").
     Body("内容部分. 可以使用 \\${var} 获取变量。如: `\\$date`: ${date}").
     InitData(getDate)
@@ -113,12 +113,12 @@ func init() {
 }
 
 func main() {
-    index := comp.Page().Body(
-        comp.Form().ColumnCount(2).Body(
-            comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-            comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
+    index := app.Page().Body(
+        app.Form().ColumnCount(2).Body(
+            app.Editor().Language("json").Label("json").Name("input").Size("xxl"),
+            app.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
         ).Actions(
-            comp.Action().Label("Convert").Level("primary").ActionType("ajax").Api(
+            app.Action().Label("Convert").Level("primary").ActionType("ajax").Api(
                 model.Schema{
                     "url":  "/convert",
                     "data": model.Schema{"input": "${input}"},
@@ -150,12 +150,12 @@ func (a action) Transform(transform func(input any) (any, error), src, dst strin
 优化后的代码如下：
 
 ```go
-comp.Page().Body(
-    comp.Form().ColumnCount(2).Body(
-        comp.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-        comp.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
+app.Page().Body(
+    app.Form().ColumnCount(2).Body(
+        app.Editor().Language("json").Label("json").Name("input").Size("xxl"),
+        app.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
     ).Actions(
-        comp.Action().Label("Convert").Level("primary").Transform(func(input any) (any, error) {
+        app.Action().Label("Convert").Level("primary").Transform(func(input any) (any, error) {
             // 将输入的 JSON 转换为 YAML
             output := "age: 27"
             return output, nil

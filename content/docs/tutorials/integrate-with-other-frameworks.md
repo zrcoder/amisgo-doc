@@ -15,25 +15,25 @@ amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handl
 
 ```go
 func main() {
-    const (
-        apiPrefix = "/api/"
-        datePath  = "date"
-    )
-    dateApi := apiPrefix + datePath
+	const (
+		apiPrefix = "/api/"
+		datePath  = "date"
+	)
+	dateApi := apiPrefix + datePath
 
-    // 初始化 gin
-    g := gin.Default()
-    g.GET(dateApi, func(c *gin.Context) {
-        c.JSON(200, gin.H{"date": time.Now()})
-    })
+	// 初始化 gin
+	g := gin.Default()
+	g.GET(dateApi, func(c *gin.Context) {
+		c.JSON(200, gin.H{"date": time.Now()})
+	})
 
-    // 初始化 amisgo
-    app := amisgo.New().
-        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
-        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+	// 初始化 amisgo
+	app := amisgo.New()
+	app.Handle(apiPrefix, g) // 将 g 挂载到 /api/ 路径
+	app.Mount("/", app.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-    // 启动服务
-    panic(app.Run(":8888"))
+	// 启动服务
+	panic(app.Run(":8888"))
 }
 ```
 
@@ -45,27 +45,27 @@ amisgo 的 `Engine` 本身实现了 `http.Handler` 接口，因此可以直接�
 
 ```go
 func main() {
-    const (
-        apiPrefix = "/api/"
-        datePath  = "date"
-    )
-    dateApi := apiPrefix + datePath
+	const (
+		apiPrefix = "/api/"
+		datePath  = "date"
+	)
+	dateApi := apiPrefix + datePath
 
-    // 初始化 gin
-    g := gin.Default()
-    g.GET(dateApi, func(c *gin.Context) {
-        c.JSON(200, gin.H{"date": time.Now()})
-    })
+	// 初始化 gin
+	g := gin.Default()
+	g.GET(dateApi, func(c *gin.Context) {
+		c.JSON(200, gin.H{"date": time.Now()})
+	})
 
-    // 初始化 amisgo
-    app := amisgo.New().
-        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
-        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+	// 初始化 amisgo
+	app := amisgo.New()
+	app.Handle(apiPrefix, g) // 将 g 挂载到 /api/ 路径
+	app.Mount("/", app.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-    // 使用标准库的 http 包
-    http.Handle("/", app)
-    http.Handle(apiPrefix, g)
-    panic(http.ListenAndServe(":8888", nil))
+	// 使用标准库的 http 包
+	http.Handle("/", app)
+	http.Handle(apiPrefix, g)
+	panic(http.ListenAndServe(":8888", nil))
 }
 ```
 
@@ -77,30 +77,30 @@ func main() {
 
 ```go
 func main() {
-    const (
-        apiPrefix = "/api/"
-        datePath  = "date"
-    )
-    dateApi := apiPrefix + datePath
+	const (
+		apiPrefix = "/api/"
+		datePath  = "date"
+	)
+	dateApi := apiPrefix + datePath
 
-    // 初始化 gin
-    g := gin.Default()
-    g.GET(dateApi, func(c *gin.Context) {
-        c.JSON(200, gin.H{"date": time.Now()})
-    })
+	// 初始化 gin
+	g := gin.Default()
+	g.GET(dateApi, func(c *gin.Context) {
+		c.JSON(200, gin.H{"date": time.Now()})
+	})
 
-    // 初始化 amisgo
-    app := amisgo.New().
-        Handle(apiPrefix, g). // 将 g 挂载到 /api/ 路径
-        Mount("/", comp.Page().InitApi(dateApi).Body("Now: ${date}"))
+	// 初始化 amisgo
+	app := amisgo.New()
+	app.Handle(apiPrefix, g) // 将 g 挂载到 /api/ 路径
+	app.Mount("/", app.Page().InitApi(dateApi).Body("Now: ${date}"))
 
-    // 将 amisgo 包装为 gin 的 HandlerFunc
-    g.GET("/", func(c *gin.Context) {
-        app.ServeHTTP(c.Writer, c.Request)
-    })
+	// 将 amisgo 包装为 gin 的 HandlerFunc
+	g.GET("/", func(c *gin.Context) {
+		app.ServeHTTP(c.Writer, c.Request)
+	})
 
-    // 启动 gin
-    panic(g.Run(":8888"))
+	// 启动 gin
+	panic(g.Run(":8888"))
 }
 ```
 
