@@ -51,7 +51,7 @@ Web UI 基本是 js 的天下。Go 在这方面有几个独辟蹊径的尝试。
 
 ### Go 模板
 
-在 html 里写一些特殊标志(用 “{{”和“}}” 包裹的内容），用数据填充模板形成最终的 html。比如：
+在 html 里写一些特殊标志，用数据填充模板形成最终的 html。比如标准库的模板引擎：
 
 ```go
 const htmlTemplate =`
@@ -77,7 +77,9 @@ err := tmpl.Execute(someWriter, data)
 
 另外支持条件判断、预定义函数等功能。
 
-使用 go 模板的应用，可以参考 Go 官方的 [present 工具](https://github.com/golang/tools/tree/master/cmd/present)， 另外较著名的有 [hugo](https://github.com/gohugoio/hugo) 及国人的 [asouldocs](https://github.com/asoul-sig/asouldocs) 项目。
+使用标准库模板的应用，可以参考 Go 官方的 [present 工具](https://github.com/golang/tools/tree/master/cmd/present)， 另外较著名的有 [hugo](https://github.com/gohugoio/hugo) 及国人的 [asouldocs](https://github.com/asoul-sig/asouldocs) 项目。
+
+也有不少三方模板引擎，功能更为丰富。值得一提的是 [a-h/templ](https://github.com/a-h/templ)，定义了简单的 DSL，结合 html 和 go 来写页面/页面片段，在编译时将 DSL 改写成 Go 代码；DSL 足够简单，符合 html 和 Go 规范，写起来顺畅，又因编译时的转换，运行时性能也不错。
 
 ### Gopherjs
 
