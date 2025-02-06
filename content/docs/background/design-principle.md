@@ -7,17 +7,17 @@ next: docs/tutorials/quick-start
 
 amisgo 是基于百度 [amis](https://aisuda.bce.baidu.com/amis) 的一个 Go 语言实现。amis 允许通过 JSON 配置来定义页面，而 amisgo 则进一步优化了这一做法，通过 Go 的类型系统定义各种组件，并将其转换为 JSON，最终通过 Go template 渲染出 amis SDK 支持的 HTML 页面。针对原生 amis 较复杂的交互部分，也增加了基于回调的简化方法。
 
-## 核心模块 comp
+## 核心模块 internal/comp
 这个模块用于定义各种组件，代码非常简单，遵循统一模式。
 
 ### 1. 组件的基本定义
 每个组件的基本定义和构造方法如下：
 
 ```go
-type form model.Schema
+type Form model.Schema
 
-func Form() form {
-  return form{"type": "form"}
+func NewForm() Form {
+  return Form{"type": "form"}
 }
 ```
 
@@ -31,11 +31,11 @@ func Form() form {
 每个组件都有一系列属性设置方法，如：
 
 ```go
-func (f form) Title(value string) form {
+func (f Form) Title(value string) Form {
   return f.set("title", value)
 }
 
-func (f form) Body(value ...any) form {
+func (f Form) Body(value ...any) Form {
 	return f.set("body", value)
 }
 ```
@@ -43,7 +43,7 @@ func (f form) Body(value ...any) form {
 > 其中，set 是一个辅助方法，用于设置属性值并返回当前组件实例：
 > 
 > ```go
-> func (f form) set(key string, value any) form {
+> func (f Form) set(key string, value any) Form {
 >   f[key] = value
 >   return f
 > }
@@ -54,12 +54,12 @@ func (f form) Body(value ...any) form {
 以下是一个简单示例，展示了 amisgo 渲染页面的写法：
 
 ```go
-comp.Page().Title("amisgo").Body(
-	comp.Form().
+app.Page().Title("amisgo").Body(
+	app.Form().
 	Api("https://xxx/api/saveForm").
 	Body(
-		comp.InputText().Label("姓名").Name("name"),
-		comp.InputEmail().Label("邮箱").Name("email"),
+		app.InputText().Label("姓名").Name("name"),
+		app.InputEmail().Label("邮箱").Name("email"),
 	),
 )
 ```
