@@ -3,11 +3,12 @@ title: "常见问题"
 date: 2024-12-29T20:30:56+08:00
 breadcrumbs: false
 weight: 3
+prev: docs/tutorials/integrate-with-other-frameworks
 ---
 
 ## 怎么导入本地 SDK
 
-amisgo 默认通过 [CDN](https://cdn.jsdelivr.net/npm/amis) 加载 amis SDK。如果网络不稳定或有特殊限制，可以从本地导入。
+amisgo 默认通过 CDN 加载 amis SDK。如果网络不稳定或有特殊限制，可以从本地导入。
 
 你需要从 [amis 仓库 release](https://github.com/baidu/amis/releases) 下载 `jssdk.tar.gz` 并解压到 `jssdk` 目录。
 
@@ -31,7 +32,7 @@ amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 
 假设要做一个有用户系统的应用，访问页面时需先鉴权，失败则重定向到登录页。使用中间件是实现此功能的理想方式。
 
-Egine 的 `Mount`、`Handle` 和 `HandleFunc` 方法均支持中间件，示例代码如下：
+引擎的 Mount、Handle 和 HandleFunc 方法均支持中间件，示例代码如下：
 
 ```go
 func main() {
@@ -95,7 +96,7 @@ app.Run(":8888")
 
 ## 怎么兼容纯 JSON
 
-假如你想直接写 JSON 来定义页面，而不是用 comp 模块的 API 来定义（这个场景可能来自快速验证 amis 文档里的示例 JSON），仅需要向 Engine 的 Mount 方法传递 JSON 内容即可。例如：
+假如你想直接写 JSON 来定义页面，而不是用 comp 模块的 API 来定义（这个场景可能来自快速验证 amis 文档里的示例 JSON），仅需要向 Mount 方法传递 JSON 内容即可。例如：
 
 ```go
 const amisJSON = `{
