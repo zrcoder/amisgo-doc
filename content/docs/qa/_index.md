@@ -84,7 +84,12 @@ func checkAuth(r *http.Request) bool {
 amisgo 支持 amis 的四种内置主题：云舍、antd、ang 和 dark。您可以配置使用其中多个主题，并在页面添加 ThemeSelect 或 ThemeButtonGroupSelect 来支持用户切换主题。
 
 ```go
-app := amisgo.New(conf.WithThemes(conf.ThemeCxd, conf.ThemeDark))
+app := amisgo.New(
+	conf.WithThemes(
+		theme.Theme{Value: theme.Cxd, Label: "Light"},
+		theme.Theme{Value: theme.Dark, Label: "Dark"},
+	),
+)
 app.Mount("/", app.Page().Body(
 	app.ThemeButtonGroupSelect(),
 	"Hello, World!",

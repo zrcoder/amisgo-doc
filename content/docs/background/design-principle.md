@@ -54,6 +54,7 @@ func (f Form) Body(value ...any) Form {
 以下是一个简单示例，展示了 amisgo 渲染页面的写法：
 
 ```go
+app := amisgo.New()
 app.Page().Title("amisgo").Body(
 	app.Form().
 	Api("https://xxx/api/saveForm").
