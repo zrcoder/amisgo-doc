@@ -21,7 +21,7 @@ amisgo.New(conf.WithLocalSdk(http.Dir("jssdk")))
 或者可以用 Go 的 embed 特性将 jssdk 目录做成 Go 包后使用，也可直接使用我们做好的：
 
 ```go
-import "gitee.com/rdor/amis-sdk/sdk"
+import sdk "gitee.com/rdor/amis-sdk"
 
 amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 ```
