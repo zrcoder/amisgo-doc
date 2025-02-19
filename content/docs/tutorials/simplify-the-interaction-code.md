@@ -13,26 +13,26 @@ weight: 3
 使用 `form` 组件的 `Api` 方法，代码可能如下：
 
 ```go
-func init() {
-    http.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-        input, _ := io.ReadAll(r.Body)
-        defer r.Body.Close()
-
-        m := map[string]any{}
-        json.Unmarshal(input, &m)
-
-        name := m["name"]
-        email := m["email"]
-        // 将用户信息存入数据库 ...
-    })
-}
-
-app.Page().Body(
-    app.Form().Api("/user").Body(
-        app.InputText().Label("姓名").Name("name"),
-        app.InputEmail().Label("邮箱").Name("email"),
-    ),
+app := amisgo.New()
+index := app.Page().Body(
+	app.Form().Api("/user").Body(
+		app.InputText().Label("姓名").Name("name"),
+		app.InputEmail().Label("邮箱").Name("email"),
+	),
 )
+app.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
+	input, _ := io.ReadAll(r.Body)
+	defer r.Body.Close()
+
+	m := map[string]string{}
+	json.Unmarshal(input, &m)
+
+	name := m["name"]
+	email := m["email"]
+	fmt.Println(name, email)
+	// 将用户信息存入数据库 ...
+})
+app.Mount("/", index)
 ```
 
 ### 优化方式
@@ -46,18 +46,22 @@ func (f form) Submit(callback func(model.Schema) error) form
 优化后的代码如下：
 
 ```go
-app.Page().Body(
-    app.Form().Body(
-        app.InputText().Label("姓名").Name("name"),
-        app.InputEmail().Label("邮箱").Name("email"),
-    ).Submit(func(m model.Schema) error {
-        name := m.Get("name")
-        email := m.Get("email")
-        // 将 name 和 email 存入数据库
-        // ...
-        return nil
-    }),
+app := amisgo.New()
+index := app.Page().Body(
+	app.Form().Api("/user").Body(
+		app.InputText().Label("姓名").Name("name"),
+		app.InputEmail().Label("邮箱").Name("email"),
+	).Submit(
+		func(s model.Schema) error {
+			name := s.Get("name").(string)
+			email := s.Get("email").(string)
+			fmt.Println(name, email)
+			// 将用户信息存入数据库 ...
+			return nil
+		},
+	),
 )
+app.Mount("/", index)
 ```
 
 > 此外，另有 `SubmitTo` 方法允许使用具体类型处理表单数据：
@@ -91,52 +95,48 @@ func getDate() (any, error) {
 
 ## 2. Action 按钮的优化
 
-假设页面有两个编辑器，第一个用于输入 JSON，第二个是只读的。点击按钮后，将第一个编辑器的内容转换为 YAML，并渲染到第二个编辑器中。
+假设页面有两个输入框，第一个用于输入人名，第二个是只读的。点击按钮后，将第一个编辑器的内容做一定转换，并渲染到第二个文本框中。
 
 ### 传统方式
 
 使用 `ajax` 类型的行为按钮，代码如下：
 
 ```go
-func init() {
-    http.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
-        input, _ := io.ReadAll(r.Body)
-        defer r.Body.Close()
-        m := map[string]any{}
-        json.Unmarshal(input, &m)
-        // ...
-        output := "age: 27"
-        resp := model.Response{Msg: "转换成功", Data: model.Schema{"output": output}} // 这里的 key 值必须是第二个编辑器的 name
-        data, _ := json.Marshal(resp)
-        w.Write(data)
-    })
-}
-
-func main() {
-    index := app.Page().Body(
-        app.Form().ColumnCount(2).Body(
-            app.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-            app.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
-        ).Actions(
-            app.Action().Label("Convert").Level("primary").ActionType("ajax").Api(
-                model.Schema{
-                    "url":  "/convert",
-                    "data": model.Schema{"input": "${input}"},
-                    "responses": model.Schema{
-                        "200": model.Schema{
-                            "then": model.Schema{
-                                "actionType": "setValue",
-                                "args": model.Schema{
-                                    "value": "${response}",
-                                },
-                            },
-                        },
-                    },
-                },
-            ),
-        ),
-    )
-}
+app := amisgo.New()
+index := app.Page().Body(
+	app.Form().WrapWithPanel(false).Body(
+		app.InputText().Name("input"),
+		app.InputText().Name("output").ReadOnly(true),
+		app.Action().
+            Label("Greet").
+			Level("primary").
+			ActionType("ajax").
+			Api(
+				app.Api().
+					Url("/convert").
+					Data(model.Schema{"input": "${input}"}).
+					Set(
+						"resp",
+						model.Schema{
+							"200": model.Schema{
+								"then": model.NewEventAction().ActionType("setValue").
+                                Args(model.NewEventActionArgs().Value("${resp}")),
+							},
+						},
+					),
+			),
+	),
+)
+app.Mount("/", index)
+app.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
+	input, _ := io.ReadAll(r.Body)
+	defer r.Body.Close()
+	m := map[string]string{}
+	json.Unmarshal(input, &m)
+	output := "hello " + m["input"]
+	resp := model.SuccessResponse("", model.Schema{"output": output}) // 这里的 key 值必须是第二个编辑器的 name
+	w.Write(resp.Json())
+})
 ```
 
 ### 优化方式
@@ -150,18 +150,19 @@ func (a action) Transform(transform func(input any) (any, error), src, dst strin
 优化后的代码如下：
 
 ```go
-app.Page().Body(
-    app.Form().ColumnCount(2).Body(
-        app.Editor().Language("json").Label("json").Name("input").Size("xxl"),
-        app.Editor().Label("yaml").Label("yaml").Name("output").Size("xxl").ReadOnly(true),
-    ).Actions(
-        app.Action().Label("Convert").Level("primary").Transform(func(input any) (any, error) {
-            // 将输入的 JSON 转换为 YAML
-            output := "age: 27"
-            return output, nil
-        }, "input", "output"),
-    ),
+app := amisgo.New()
+index := app.Page().Body(
+	app.Form().WrapWithPanel(false).Body(
+		app.InputText().Name("input"),
+		app.InputText().Name("output").ReadOnly(true),
+		app.Action().Label("Greet").
+			Level("primary").
+			Transform(func(input any) (any, error) {
+				return "hello " + input.(string), nil
+			}, "input", "output"),
+	),
 )
+app.Mount("/", index)
 ```
 
 ### 多对多转换
