@@ -35,9 +35,11 @@ amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 引擎的 Mount、Handle 和 HandleFunc 方法均支持中间件，示例代码如下：
 
 ```go
+const loginPath = "/login"
+
 func main() {
 	app := amisgo.New()
-	index := app.Page().InitApi(echoApiUrl).Body("${body}")
+	index := app.Page().Body("Hello, Amisgo!")
 	login := app.Page().Body(
 		app.Form().Body(
 			app.InputEmail().Name("user"),
@@ -45,7 +47,7 @@ func main() {
 		),
 	)
 	app.Mount("/", index, checkAuthMiddleware, testMiddleware)
-	app.Mount("/login", login)
+	app.Mount(loginPath, login)
 
 	panic(app.Run(":8080"))
 }
@@ -54,8 +56,8 @@ func main() {
 func checkAuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("check auth middleware")
-		if r.URL.Path != loginUrl && !checkAuth(r) {
-			util.Redirect(w, r, loginUrl, http.StatusTemporaryRedirect)
+		if r.URL.Path != loginPath && !checkAuth(r) {
+			util.Redirect(w, r, loginPath, http.StatusTemporaryRedirect)
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -105,9 +107,9 @@ app.Run(":8888")
 
 ```go
 const amisJSON = `{
-    "type": "page",
-    "title": "标题",
-    "body": "Hello World!"
+	"type": "page",
+	"title": "Hello",
+	"body": "World!"
 }`
 
 app := amisgo.New()

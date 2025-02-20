@@ -81,21 +81,23 @@ func (p page) InitData(getter func() (any, error)) page
 例如，获取当前时间的代码可以简化为：
 
 ```go
-app.Page().
-    Title("标题").
-    Body("内容部分. 可以使用 \\${var} 获取变量。如: `\\$date`: ${date}").
-    InitData(getDate)
+func main() {
+	app := amisgo.New()
+	index := app.Page().Body("Now: ${date}").InitData(getDate)
+	app.Mount("/", index)
+	app.Run(":8888")
+}
 
 func getDate() (any, error) {
-    y, m, d := time.Now().Date()
-    mm := time.Now().UnixNano()
-    return map[string]string{"date": fmt.Sprintf("%d-%d-%d %d", y, m, d, mm)}, nil
+	y, m, d := time.Now().Date()
+	mm := time.Now().UnixNano()
+	return map[string]string{"date": fmt.Sprintf("%d-%d-%d %d", y, m, d, mm)}, nil
 }
 ```
 
 ## 2. Action 按钮的优化
 
-假设页面有两个输入框，第一个用于输入人名，第二个是只读的。点击按钮后，将第一个编辑器的内容做一定转换，并渲染到第二个文本框中。
+假设页面有两个输入框，第一个用于输入人名，第二个只读。点击按钮后，将输入做一定转换，并渲染到第二个文本框中。
 
 ### 传统方式
 
