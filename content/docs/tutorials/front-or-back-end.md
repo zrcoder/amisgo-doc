@@ -16,7 +16,7 @@ weight: 2
 
 ### 主要代码
 
-```go
+```go {hl_lines=[7,8,9,10,11,12,13,14]}
 app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(
 		app.Flex().Justify("space-between").Items(
@@ -46,17 +46,6 @@ app.Page().Body(
 ### 关键点解析
 
 - **Transform 方法**：`Run` 和 `Format` 按钮的 `Transform` 方法用于处理用户输入并调用相应的 API。`compile` 和 `format` 函数负责与 Go+ Playground 的 API 交互，并将结果返回给前端。
-
-```go
-app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
-	// TODO
-	return nil, nil
-}, "body", "result"),
-app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
-	// TODO
-	return nil, nil
-}, "body", "body"),
-```
 
 - **本地代理服务**：通过本地代理服务中转请求，可以简化前端代码，避免在组件中直接编写 API 调用逻辑。
 

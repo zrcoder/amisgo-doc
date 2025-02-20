@@ -73,7 +73,7 @@ params:
       path: /logo.svg
     width: wide
   page:
-    width: normal
+    width: wide
   editURL:
     enable: true
     base: "https://gitee.com/rdor/amisgo-doc/edit/main/content/"

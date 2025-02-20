@@ -12,7 +12,7 @@ weight: 3
 
 使用 `form` 组件的 `Api` 方法，代码可能如下：
 
-```go
+```go {hl_lines=[3,8]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().Api("/user").Body(
@@ -102,7 +102,7 @@ func getDate() (any, error) {
 
 使用 `ajax` 类型的行为按钮，代码如下：
 
-```go
+```go {hl_lines=[12,27]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(

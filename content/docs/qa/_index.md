@@ -34,7 +34,7 @@ amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 
 引擎的 Mount、Handle 和 HandleFunc 方法均支持中间件，示例代码如下：
 
-```go
+```go {hl_lines=[12]}
 const loginPath = "/login"
 
 func main() {
