@@ -40,7 +40,7 @@ app.Mount("/", index)
 `amisgo` 为 `form` 组件新增了 `Submit` 方法，简化了代码：
 
 ```go
-func (f form) Submit(callback func(model.Schema) error) form
+func (f Form) Submit(callback func(schema.Schema) error) Form
 ```
 
 优化后的代码如下：
@@ -52,7 +52,7 @@ index := app.Page().Body(
 		app.InputText().Label("姓名").Name("name"),
 		app.InputEmail().Label("邮箱").Name("email"),
 	).Submit(
-		func(s model.Schema) error {
+		func(s schema.Schema) error {
 			name := s.Get("name").(string)
 			email := s.Get("email").(string)
 			fmt.Println(name, email)
@@ -61,7 +61,6 @@ index := app.Page().Body(
 		},
 	),
 )
-app.Mount("/", index)
 ```
 
 > 此外，另有 `SubmitTo` 方法允许使用具体类型处理表单数据：
@@ -110,19 +109,19 @@ index := app.Page().Body(
 		app.InputText().Name("input"),
 		app.InputText().Name("output").ReadOnly(true),
 		app.Action().
-            Label("Greet").
+			Label("Greet").
 			Level("primary").
 			ActionType("ajax").
 			Api(
 				app.Api().
 					Url("/convert").
-					Data(model.Schema{"input": "${input}"}).
+					Data(schema.Schema{"input": "${input}"}).
 					Set(
 						"resp",
-						model.Schema{
-							"200": model.Schema{
-								"then": model.NewEventAction().ActionType("setValue").
-                                Args(model.NewEventActionArgs().Value("${resp}")),
+						schema.Schema{
+							"200": schema.Schema{
+								"then": app.EventAction().ActionType("setValue").
+									Args(app.EventActionArgs().Value("${resp}")),
 							},
 						},
 					),
@@ -136,7 +135,7 @@ app.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
 	m := map[string]string{}
 	json.Unmarshal(input, &m)
 	output := "hello " + m["input"]
-	resp := model.SuccessResponse("", model.Schema{"output": output}) // 这里的 key 值必须是第二个编辑器的 name
+	resp := schema.SuccessResponse("", schema.Schema{"output": output}) // 这里的 key 值必须是第二个编辑器的 name
 	w.Write(resp.Json())
 })
 ```
@@ -146,7 +145,7 @@ app.HandleFunc("/convert", func(w http.ResponseWriter, r *http.Request) {
 `amisgo` 为行为按钮新增了 `Transform` 方法：
 
 ```go
-func (a action) Transform(transform func(input any) (any, error), src, dst string) action
+func (a Action) Transform(transfor func(input any) (any, error), src, dst string) Action
 ```
 
 优化后的代码如下：

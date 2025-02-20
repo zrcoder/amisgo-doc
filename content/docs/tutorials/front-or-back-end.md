@@ -24,20 +24,20 @@ app.Page().Body(
 				app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
 				app.InputGroup().Body(
 					app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
-						return compile(input.(string))
+						// TODO
+						return nil, nil
 					}, "body", "result"),
 					app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
-						return format(input.(string))
+						// TODO
+						return nil, nil
 					}, "body", "body"),
 				),
-				app.Select().Name("examples").Value(defaultExample).Options(
-					examples...,
-				),
+				app.Select().Name("examples").Value("TODO").Options("TODO"),
 			),
 			app.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
 		),
 		app.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
-			AllowFullscreen(false).Options(model.Schema{"fontSize": 15}),
+			AllowFullscreen(false).Options(schema.Schema{"fontSize": 15}),
 		app.Code().Name("result").Language("plaintext"),
 	),
 )
@@ -49,10 +49,12 @@ app.Page().Body(
 
 ```go
 app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
-	return compile(input.(string))
+	// TODO
+	return nil, nil
 }, "body", "result"),
 app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
-	return format(input.(string))
+	// TODO
+	return nil, nil
 }, "body", "body"),
 ```
 

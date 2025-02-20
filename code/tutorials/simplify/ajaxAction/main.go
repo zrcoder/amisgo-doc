@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/zrcoder/amisgo"
-	"github.com/zrcoder/amisgo/model"
+	"github.com/zrcoder/amisgo/schema"
 )
 
 func main() {
@@ -22,13 +22,13 @@ func main() {
 				Api(
 					app.Api().
 						Url("/convert").
-						Data(model.Schema{"input": "${input}"}).
+						Data(schema.Schema{"input": "${input}"}).
 						Set(
 							"resp",
-							model.Schema{
-								"200": model.Schema{
-									"then": model.NewEventAction().ActionType("setValue").
-										Args(model.NewEventActionArgs().Value("${resp}")),
+							schema.Schema{
+								"200": schema.Schema{
+									"then": app.EventAction().ActionType("setValue").
+										Args(app.EventActionArgs().Value("${resp}")),
 								},
 							},
 						),
@@ -42,7 +42,7 @@ func main() {
 		m := map[string]string{}
 		json.Unmarshal(input, &m)
 		output := "hello " + m["input"]
-		resp := model.SuccessResponse("", model.Schema{"output": output}) // 这里的 key 值必须是第二个编辑器的 name
+		resp := schema.SuccessResponse("", schema.Schema{"output": output}) // 这里的 key 值必须是第二个编辑器的 name
 		w.Write(resp.Json())
 	})
 

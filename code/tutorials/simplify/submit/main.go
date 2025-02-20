@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/zrcoder/amisgo"
-	"github.com/zrcoder/amisgo/model"
+	"github.com/zrcoder/amisgo/schema"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 			app.InputText().Label("姓名").Name("name"),
 			app.InputEmail().Label("邮箱").Name("email"),
 		).Submit(
-			func(s model.Schema) error {
+			func(s schema.Schema) error {
 				name := s.Get("name").(string)
 				email := s.Get("email").(string)
 				fmt.Println(name, email)

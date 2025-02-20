@@ -14,14 +14,14 @@ amisgo 是基于百度 [amis](https://aisuda.bce.baidu.com/amis) 的一个 Go �
 每个组件的基本定义和构造方法如下：
 
 ```go
-type Form model.Schema
+type Form schema.Schema
 
 func NewForm() Form {
   return Form{"type": "form"}
 }
 ```
 
-> 其中 model.Shema 底层是 map[string]any: 
+> 其中 schema.Shema 底层是 map[string]any: 
 > ```go
 > type Schema map[string]any
 > ```
