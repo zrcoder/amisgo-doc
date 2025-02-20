@@ -15,24 +15,17 @@ func main() {
 		app.Form().WrapWithPanel(false).Body(
 			app.InputText().Name("input"),
 			app.InputText().Name("output").ReadOnly(true),
-			app.Action().
-				Label("Greet").
-				Level("primary").
-				ActionType("ajax").
-				Api(
-					app.Api().
-						Url("/convert").
-						Data(schema.Schema{"input": "${input}"}).
-						Set(
-							"resp",
-							schema.Schema{
-								"200": schema.Schema{
-									"then": app.EventAction().ActionType("setValue").
-										Args(app.EventActionArgs().Value("${resp}")),
-								},
-							},
-						),
+			app.Action().Label("Greet").Level("primary").ActionType("ajax").Api(
+				app.Api().Url("/convert").Data(schema.Schema{"input": "${input}"}).Set(
+					"resp",
+					schema.Schema{
+						"200": schema.Schema{
+							"then": app.EventAction().ActionType("setValue").
+								Args(app.EventActionArgs().Value("${resp}")),
+						},
+					},
 				),
+			),
 		),
 	)
 	app.Mount("/", index)

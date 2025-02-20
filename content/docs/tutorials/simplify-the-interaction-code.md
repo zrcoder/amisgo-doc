@@ -12,7 +12,7 @@ weight: 3
 
 使用 `form` 组件的 `Api` 方法，代码可能如下：
 
-```go {hl_lines=[3,8]}
+```go {base_url=".",filename="api/main.go",hl_lines=[3,8]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().Api("/user").Body(
@@ -32,7 +32,6 @@ app.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(name, email)
 	// 将用户信息存入数据库 ...
 })
-app.Mount("/", index)
 ```
 
 ### 优化方式
@@ -45,7 +44,7 @@ func (f Form) Submit(callback func(schema.Schema) error) Form
 
 优化后的代码如下：
 
-```go
+```go {base_url=".",filename="submit/main.go"} 
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().Api("/user").Body(
@@ -79,7 +78,7 @@ func (p page) InitData(getter func() (any, error)) page
 
 例如，获取当前时间的代码可以简化为：
 
-```go
+```go {base_url=".",filename="init-data/main.go"} 
 func main() {
 	app := amisgo.New()
 	index := app.Page().Body("Now: ${date}").InitData(getDate)
@@ -102,30 +101,23 @@ func getDate() (any, error) {
 
 使用 `ajax` 类型的行为按钮，代码如下：
 
-```go {hl_lines=[12,27]}
+```go {base_url=".",filename="ajax-action/main.go",hl_lines=[7,20]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(
 		app.InputText().Name("input"),
 		app.InputText().Name("output").ReadOnly(true),
-		app.Action().
-			Label("Greet").
-			Level("primary").
-			ActionType("ajax").
-			Api(
-				app.Api().
-					Url("/convert").
-					Data(schema.Schema{"input": "${input}"}).
-					Set(
-						"resp",
-						schema.Schema{
-							"200": schema.Schema{
-								"then": app.EventAction().ActionType("setValue").
-									Args(app.EventActionArgs().Value("${resp}")),
-							},
-						},
-					),
+		app.Action().Label("Greet").Level("primary").ActionType("ajax").Api(
+			app.Api().Url("/convert").Data(schema.Schema{"input": "${input}"}).Set(
+				"resp",
+				schema.Schema{
+					"200": schema.Schema{
+						"then": app.EventAction().ActionType("setValue").
+							Args(app.EventActionArgs().Value("${resp}")),
+					},
+				},
 			),
+		),
 	),
 )
 app.Mount("/", index)
@@ -150,7 +142,7 @@ func (a Action) Transform(transfor func(input any) (any, error), src, dst string
 
 优化后的代码如下：
 
-```go
+```go {base_url=".",filename="transform/main.go"} 
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(
@@ -163,7 +155,6 @@ index := app.Page().Body(
 			}, "input", "output"),
 	),
 )
-app.Mount("/", index)
 ```
 
 ### 多对多转换

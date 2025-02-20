@@ -82,6 +82,7 @@ params:
     default: system
     displayToggle: true
   footer:
+    width: wide
     enable: true
     displayPoweredBy: false
     displayCopyright: false

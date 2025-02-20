@@ -15,31 +15,22 @@ weight: 2
 我们以仿写 [Go+ Playground](https://play.goplus.org) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go+ Playground 的现有 API 实现。
 
 ### 主要代码
-
-```go {hl_lines=[7,8,9,10,11,12,13,14]}
-app.Page().Body(
-	app.Form().WrapWithPanel(false).Body(
-		app.Flex().Justify("space-between").Items(
-			app.Group().Mode("inline").Body(
-				app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
-				app.InputGroup().Body(
-					app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
-						// TODO
-						return nil, nil
-					}, "body", "result"),
-					app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
-						// TODO
-						return nil, nil
-					}, "body", "body"),
-				),
-				app.Select().Name("examples").Value("TODO").Options("TODO"),
-			),
-			app.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
-		),
-		app.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
-			AllowFullscreen(false).Options(schema.Schema{"fontSize": 15}),
-		app.Code().Name("result").Language("plaintext"),
+```go {base_url=".",filename="gop-play.go"hl_lines=[4,5,6,7,8,9,10,11]}
+app.Form().WrapWithPanel(false).Body(
+	app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
+	app.InputGroup().Body(
+		app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
+			// TODO
+			return nil, nil
+		}, "body", "result"),
+		app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
+			// TODO
+			return nil, nil
+		}, "body", "body"),
 	),
+	app.Select().Name("examples").Value("TODO").Options("TODO"),
+	app.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
+	// ...
 )
 ```
 

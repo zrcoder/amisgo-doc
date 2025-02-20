@@ -1,5 +1,5 @@
-gitee.com/rdor/amis-sdk v1.0.3 h1:OenwEy+gJbZOKxnzOVh0paV3M1D1jFrH9HAchNmigZs=
-gitee.com/rdor/amis-sdk v1.0.3/go.mod h1:BUgLkVatkdICsUMZsyY35tbS/lk21df+VWo2UMJsFKc=
+gitee.com/rdor/amis-sdk/v6 v6.11.0 h1:aVoM1PfP0DMYIff5RlPxkldzhAx1OB0SJWea9YuxBRw=
+gitee.com/rdor/amis-sdk/v6 v6.11.0/go.mod h1:2qzZTlGPFKPgVyh1qnxbNj8XWT11LYpPdJaBNAVWWTw=
 github.com/bytedance/sonic v1.11.6 h1:oUp34TzMlL+OY1OUWxHqsdkgC/Zfc85zGqw9siXjrc0=
 github.com/bytedance/sonic v1.11.6/go.mod h1:LysEHSvpvDySVdC2f87zGWf6CIKJcAvqab1ZaiQtds4=
 github.com/bytedance/sonic/loader v0.1.1 h1:c+e5Pt1k/cy5wMveRDyk2X4B9hF4g7an8N3zCYjJFNM=

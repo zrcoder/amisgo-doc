@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	sdk "gitee.com/rdor/amis-sdk"
+	sdk "gitee.com/rdor/amis-sdk/v6"
 	"github.com/zrcoder/amisgo"
 	"github.com/zrcoder/amisgo/conf"
 )

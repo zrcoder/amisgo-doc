@@ -17,7 +17,7 @@ go get github.com/zrcoder/amisgo
 
 以下是一个简单的示例代码，展示了如何使用 `amisgo` 创建一个包含表单的页面，并启动一个本地服务器。
 
-```go
+```go {base_url=".",filename="quick-start.go"} 
 package main
 
 import (

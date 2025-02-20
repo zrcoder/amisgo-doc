@@ -31,4 +31,5 @@ func main() {
 			app.Code().Name("result").Language("plaintext"),
 		),
 	)
+	app.Run()
 }

@@ -3,7 +3,7 @@ module amisgo-doc
 go 1.18.0
 
 require (
-	gitee.com/rdor/amis-sdk v1.0.3
+	gitee.com/rdor/amis-sdk/v6 v6.11.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/zrcoder/amisgo v0.11.6-0.20250220090628-3264e7d062c6
 )
