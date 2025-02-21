@@ -12,7 +12,7 @@ weight: 3
 
 使用 `form` 组件的 `Api` 方法，代码可能如下：
 
-```go {base_url=".",filename="api/main.go",hl_lines=[3,8]}
+```go ={hl_lines=[3,8]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().Api("/user").Body(
@@ -44,7 +44,7 @@ func (f Form) Submit(callback func(schema.Schema) error) Form
 
 优化后的代码如下：
 
-```go {base_url=".",filename="submit/main.go"} 
+```go
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().Api("/user").Body(
@@ -78,7 +78,7 @@ func (p page) InitData(getter func() (any, error)) page
 
 例如，获取当前时间的代码可以简化为：
 
-```go {base_url=".",filename="init-data/main.go"} 
+```go
 func main() {
 	app := amisgo.New()
 	index := app.Page().Body("Now: ${date}").InitData(getDate)
@@ -101,7 +101,7 @@ func getDate() (any, error) {
 
 使用 `ajax` 类型的行为按钮，代码如下：
 
-```go {base_url=".",filename="ajax-action/main.go",hl_lines=[7,20]}
+```go {hl_lines=[7,20]}
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(
@@ -142,7 +142,7 @@ func (a Action) Transform(transfor func(input any) (any, error), src, dst string
 
 优化后的代码如下：
 
-```go {base_url=".",filename="transform/main.go"} 
+```go
 app := amisgo.New()
 index := app.Page().Body(
 	app.Form().WrapWithPanel(false).Body(

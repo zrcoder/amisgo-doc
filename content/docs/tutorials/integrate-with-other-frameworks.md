@@ -13,7 +13,7 @@ amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handl
 
 假设 UI 部分由 amisgo 定义，而 API 部分使用 gin 实现。可以通过 `Handle` 方法将 gin 的路由挂载到 amisgo 中。
 
-```go {base_url=".",filename="amisgo/main.go"} 
+```go
 const (
 	apiPrefix = "/api/"
 	datePath  = "date"
@@ -41,7 +41,7 @@ func main() {
 
 amisgo 引擎本身实现了 `http.Handler` 接口，因此可以直接与标准库的 `http` 包集成。
 
-```go {base_url=".",filename="standard-lib/main.go"} 
+```go
 func main() {
 	// 初始化 gin
 	g := gin.Default()
@@ -64,7 +64,7 @@ func main() {
 
 如果希望以 gin 为主框架，可以将 amisgo 实例包装为 gin 的 `HandlerFunc`，并在 gin 中处理请求。
 
-```go {base_url=".",filename="gin/main.go"} 
+```go
 func main() {
 	// 初始化 gin
 	g := gin.Default()

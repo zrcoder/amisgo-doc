@@ -20,7 +20,7 @@ amisgo.New(conf.WithLocalSdk(http.Dir("jssdk")))
 
 或者可以用 Go 的 embed 特性将 jssdk 目录做成 Go 包后使用，也可直接使用我们做好的：
 
-```go {base_url=".",filename="localsdk/main.go"} 
+```go
 import sdk "gitee.com/rdor/amis-sdk/v6"
 
 amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
@@ -34,8 +34,7 @@ amisgo.New(conf.WithLocalSdk(http.FS(sdk.FS)))
 
 引擎的 Mount、Handle 和 HandleFunc 方法均支持中间件，示例代码如下：
 
-
-```go {base_url=".",filename="middleware/main.go",hl_lines=[12]}
+```go {hl_lines=[12]}
 const loginPath = "/login"
 
 func main() {
@@ -86,7 +85,7 @@ func checkAuth(r *http.Request) bool {
 
 amisgo 支持 amis 的四种内置主题：云舍、antd、ang 和 dark。您可以配置使用其中多个主题，并在页面添加 ThemeSelect 或 ThemeButtonGroupSelect 来支持用户切换主题。
 
-```go {base_url=".",filename="themes/main.go"}
+```go
 app := amisgo.New(
 	conf.WithThemes(
 		theme.Theme{Value: theme.Cxd, Label: "Light"},
@@ -106,7 +105,7 @@ app.Run(":8888")
 
 假如你想直接写 JSON 来定义页面，而不是用 comp 模块的 API 来定义（这个场景可能来自快速验证 amis 文档里的示例 JSON），仅需要向 Mount 方法传递 JSON 内容即可。例如：
 
-```go {base_url=".",filename="amisJSON/main.go"} 
+```go
 const amisJSON = `{
 	"type": "page",
 	"title": "Hello",
@@ -122,7 +121,7 @@ app.Run(":8080")
 
 当然，你可以更进一步，用 JSON 文件定义页面内容，那么仅需要把文件内容传递到 Mount 的第二个参数即可； 甚至使用 embed，进一步简化代码。
 
-```go {base_url=".",filename="amisJSONEmbed/main.go"}
+```go {filename="main.go"}
 //go:embed pages/index.json
 var index json.RawMessage
 
@@ -133,7 +132,7 @@ func main() {
 }
 ```
 
-```json {base_url=".",filename="amisJSONEmbed/pages/index.json"}
+```json {filename="pages/index.json"}
 {
     "type": "page",
     "title": "Hello",

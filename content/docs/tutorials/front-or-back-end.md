@@ -15,7 +15,7 @@ weight: 2
 我们以仿写 [Go+ Playground](https://play.goplus.org) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go+ Playground 的现有 API 实现。
 
 ### 主要代码
-```go {base_url=".",filename="gop-play.go"hl_lines=[4,5,6,7,8,9,10,11]}
+```go {hl_lines=[4,5,6,7,8,9,10,11]}
 app.Form().WrapWithPanel(false).Body(
 	app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
 	app.InputGroup().Body(
