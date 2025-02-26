@@ -88,8 +88,8 @@ amisgo 支持 amis 的四种内置主题：云舍、antd、ang 和 dark。您可
 ```go
 app := amisgo.New(
 	conf.WithThemes(
-		theme.Theme{Value: theme.Cxd, Label: "Light"},
-		theme.Theme{Value: theme.Dark, Label: "Dark"},
+		conf.Theme{Value: conf.ThemeCxd, Label: "Light"},
+		conf.Theme{Value: conf.ThemeDark, Label: "Dark"},
 	),
 )
 app.Mount("/", app.Page().Body(
@@ -100,6 +100,79 @@ app.Run(":8888")
 ```
 
 实际的例子可以参考示例库的 dev-topys 和 todp-app 。
+
+## 怎么支持多语言
+
+类似对多主题的支持，amisgo 以同样的方式支持多语言：
+```go {hl_lines=[3,4,7]}
+app := amisgo.New(
+	conf.WithLocales(
+		conf.Locale{Value: conf.LocaleZhCN, Label: "汉"},
+		conf.Locale{Value: conf.LocaleEnUS, Label: "En"},
+	),
+)
+index := app.Page().Title("amisgo").Body(
+	app.LocaleButtonGroupSelect(),
+)
+app.Mount("/", index)
+```
+
+以上配置可以实现中英文切换，所有组件内置文本会随用户点击按钮切换。对于自定义内容的多语言，或者要覆写内置组件的文本，可以 json 文件的形式支持。
+
+```text
+├── i18n
+│   ├── en-US.json
+│   └── zh-CN.json
+└── main.go
+```
+
+```go {filename=main.go,hl_lines=[18,19]}
+var (
+	//go:embed i18n/zh-CN.json
+	zhCN json.RawMessage
+	//go:embed i18n/en-US.json
+	enUS json.RawMessage
+)
+
+func main() {
+	app := amisgo.New(
+		conf.WithLocales(
+			conf.Locale{Value: conf.LocaleZhCN, Label: "汉", Dict: zhCN},
+			conf.Locale{Value: conf.LocaleEnUS, Label: "En", Dict: enUS},
+		),
+	)
+	index := app.Page().Title("amisgo").Body(
+		app.LocaleButtonGroupSelect(),
+		app.Form().Body(
+			app.InputText().Label("${i18n.index.name}").Name("name"),
+			app.InputEmail().Label("${i18n.index.email}").Name("email"),
+		),
+	)
+	app.Mount("/", index)
+
+	fmt.Println("Please visit http://localhost:8080")
+	panic(app.Run(":8080"))
+}
+```
+
+```json {filename="i18n/en-US.json"}
+{
+    "index": {
+        "name": "Name",
+        "email": "Email"
+    }
+}
+```
+```json {filename="i18n/zh-CN.json"}
+{
+    "index": {
+        "name": "姓名",
+        "email": "邮箱"
+    }
+}
+```
+
+可参考示例库中的 todo-app 查看真实示例。
 
 ## 怎么兼容纯 JSON
 
