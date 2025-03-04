@@ -10,27 +10,26 @@ weight: 2
 
 在纯前端模式下，amisgo 主要用于编写前端代码，而后端服务则由额外的服务器提供。这种模式遵循传统的前后端分离架构。
 
-### 示例：仿写 Go+ Playground
+### 示例：仿写 Go Playground
 
-我们以仿写 [Go+ Playground](https://play.goplus.org) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go+ Playground 的现有 API 实现。
+我们以仿写 [Go Playground](https://go.dev/play) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go Playground 的现有 API 实现。
 
 ### 主要代码
-```go {hl_lines=[4,5,6,7,8,9,10,11]}
-app.Form().WrapWithPanel(false).Body(
-	app.Image().Alt("Go+").Src("/static/gop.svg").Height("20px").InnerClassName("border-none"),
-	app.InputGroup().Body(
-		app.Button().Primary(true).Label("Run").Transform(func(input any) (any, error) {
-			// TODO
-			return nil, nil
-		}, "body", "result"),
-		app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
-			// TODO
-			return nil, nil
-		}, "body", "body"),
-	),
-	app.Select().Name("examples").Value("TODO").Options("TODO"),
-	app.Button().Label("Github").ActionType("url").Icon("fa fa-github").Url("https://github.com/goplus/gop"),
-	// ...
+```go {hl_lines=[2,3,4,5,6,7,8,9,10,11]}
+app.Form().Body(
+	app.Button().Primary(true).Label("Run").TransformMultiple(func(s schema.Schema) (schema.Schema, error) {
+		res, err := compile(s.Get("body").(string))
+		if err != nil {
+			return schema.Schema{"result": "❌ " + err.Error()}, nil
+		}
+		return schema.Schema{"result": res}, nil
+	}, "body"),
+	app.Button().Primary(true).Label("Format").Transform(func(input any) (any, error) {
+		return format(input.(string))
+	}, "body", "body"),
+	app.Editor().Language("c").Name("body").Size("xxl").Value("${examples}").
+		AllowFullscreen(false).Options(schema.Schema{"fontSize": 15}),
+	app.Code().Name("result").Language("plaintext"),
 )
 ```
 
@@ -42,7 +41,7 @@ app.Form().WrapWithPanel(false).Body(
 
 ### 效果展示
 
-![Go+ Playground 效果图](/gop-play.png)
+![Go Playground 效果图](/goplay.png)
 
 完整代码请参考示例库。
 
