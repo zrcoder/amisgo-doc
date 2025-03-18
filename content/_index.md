@@ -35,7 +35,7 @@ Go 开发者的前端伙伴
   {{< hextra/feature-card
     title="轻巧"
     subtitle="极简 API，纯 Go 开发，无需 js。"
-    image="gop-play.png"
+    image="goplay.png"
 
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
     imageClass="hx-top-[40%] hx-left-[24px] hx-w-[180%] sm:hx-w-[110%] dark:hx-opacity-80"
@@ -45,7 +45,7 @@ Go 开发者的前端伙伴
   {{< hextra/feature-card
     title="丰富"
     subtitle="组件丰富，内置云舍、antd、ang、dark 主题。"
-    image="dtoy.png"
+    image="/dtoy.png"
 
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
     imageClass="hx-top-[40%] hx-left-[24px] hx-w-[180%] sm:hx-w-[110%] dark:hx-opacity-80"
@@ -54,7 +54,7 @@ Go 开发者的前端伙伴
   {{< hextra/feature-card
     title="灵动"
     subtitle="标准 http.Handler, 易与其他框架集成。响应式布局，适应不同屏幕。"
-    image="todo-app.png"
+    image="/todo-app.png"
 
     class="hx-aspect-auto md:hx-aspect-[1.1/1] max-md:hx-min-h-[340px]"
     imageClass="hx-top-[40%] hx-left-[24px] hx-w-[180%] sm:hx-w-[110%] dark:hx-opacity-80"
