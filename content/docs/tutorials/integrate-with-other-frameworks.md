@@ -2,7 +2,6 @@
 title: "和其他框架集成"
 date: 2024-12-23T16:28:44+08:00
 weight: 4
-next: docs/qa
 ---
 
 amisgo 提供了 Handle 和 HandleFunc 方法来集成其他实现了 http.Handler 的实例; 同时，其引擎也是一个标准的 http.Handler, 可方便集成进其他框架。

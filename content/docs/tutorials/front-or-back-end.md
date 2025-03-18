@@ -15,6 +15,7 @@ weight: 2
 我们以仿写 [Go Playground](https://go.dev/play) 为例，主要实现 `Run` 和 `Format` 两个功能。前端代码使用 amisgo 编写，而后端功能通过调用 Go Playground 的现有 API 实现。
 
 ### 主要代码
+
 ```go {hl_lines=[2,3,4,5,6,7,8,9,10,11]}
 app.Form().Body(
 	app.Button().Primary(true).Label("Run").TransformMultiple(func(s schema.Schema) (schema.Schema, error) {
@@ -43,7 +44,7 @@ app.Form().Body(
 
 ![Go Playground 效果图](/goplay.png)
 
-完整代码请参考示例库。
+完整代码请参考“应用案例”章节。
 
 ## 前后端合一模式
 
@@ -53,8 +54,7 @@ app.Form().Body(
 
 我们以一个简单的 Todo List 应用为例，前端用 amisgo 编写，后端则使用 gin 库，数据库采用 SQLite，展示如何实现前后端合一模式。
 
-代码请参考示例库。
-
+代码请参考“应用案例”章节。
 
 ## 总结
 

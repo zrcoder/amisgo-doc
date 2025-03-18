@@ -159,7 +159,7 @@ index := app.Page().Body(
 
 ### 多对多转换
 
-另有 `TransformMultiple` 方法支持从多个组件的输入值转换后渲染到多个组件。可以参考示例库中的 dev-toys，其中的 convert 组件使用了 Transform，生成多种类型的 hash 值使用了 TransformMultiple。
+另有 `TransformMultiple` 方法支持从多个组件的输入值转换后渲染到多个组件。可以参考“应用案例”章节中的 dev-toys，其中的 convert 组件使用了 Transform，生成多种类型的 hash 值使用了 TransformMultiple。
 
 ---
 

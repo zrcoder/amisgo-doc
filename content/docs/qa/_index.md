@@ -3,7 +3,7 @@ title: "常见问题"
 date: 2024-12-29T20:30:56+08:00
 breadcrumbs: false
 weight: 3
-prev: docs/tutorials/integrate-with-other-frameworks
+prev: docs/tutorials/practical-apps
 ---
 
 ## 怎么导入本地 SDK
@@ -79,7 +79,7 @@ func checkAuth(r *http.Request) bool {
 }
 ```
 
-更多实现可参考示例库中的 todo-app 。
+更多实现可参考“应用案例”章节中的 todo-app 。
 
 ## 怎么切换主题
 
@@ -99,11 +99,12 @@ app.Mount("/", app.Page().Body(
 app.Run(":8888")
 ```
 
-实际的例子可以参考示例库的 dev-topys 和 todp-app 。
+实际的例子可以参考“应用案例”章节的 dev-topys 和 todp-app 。
 
 ## 怎么支持多语言
 
 类似对多主题的支持，amisgo 以同样的方式支持多语言：
+
 ```go {hl_lines=[3,4,7]}
 app := amisgo.New(
 	conf.WithLocales(
@@ -157,22 +158,23 @@ func main() {
 
 ```json {filename="i18n/en-US.json"}
 {
-    "index": {
-        "name": "Name",
-        "email": "Email"
-    }
-}
-```
-```json {filename="i18n/zh-CN.json"}
-{
-    "index": {
-        "name": "姓名",
-        "email": "邮箱"
-    }
+  "index": {
+    "name": "Name",
+    "email": "Email"
+  }
 }
 ```
 
-可参考示例库中的 todo-app 查看真实示例。
+```json {filename="i18n/zh-CN.json"}
+{
+  "index": {
+    "name": "姓名",
+    "email": "邮箱"
+  }
+}
+```
+
+可参考“应用案例”章节中的 todo-app 查看真实示例。
 
 ## 怎么兼容纯 JSON
 
@@ -207,8 +209,8 @@ func main() {
 
 ```json {filename="pages/index.json"}
 {
-    "type": "page",
-    "title": "Hello",
-    "body": "World!"
+  "type": "page",
+  "title": "Hello",
+  "body": "World!"
 }
 ```
