@@ -12,7 +12,7 @@ PodFiles 是一个基于 amisgo 的工具，旨在管理 Kubernetes Pod 内的�
 
 ![podFiles](/podFiles.png)
 
-## [示例库：amisgo-examples](https://github.com/zrcoder/amisgo-examples)
+## [amisgo-examples](https://github.com/zrcoder/amisgo-examples)
 
 amisgo-examples 是一个展示 amisgo 使用方法的示例仓库，包含多个示例，每个示例本身亦有实用价值。
 
@@ -28,6 +28,9 @@ amisgo-examples 是一个展示 amisgo 使用方法的示例仓库，包含多�
 
   ![todo-app](/todo-app.png)
 
-- [ball-sort](https://github.com/zrcoder/amisgo-examples/tree/main/ball-sort)
+## [amisgo-games](https://github.com/zrcoder/agg)
+
+- ball-sort
 
   ![ball-sort](/ball-sort.png)
+
