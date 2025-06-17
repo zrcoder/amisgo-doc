@@ -8,9 +8,11 @@ next: docs/tutorials/quick-start
 amisgo 是基于百度 [amis](https://aisuda.bce.baidu.com/amis) 的一个 Go 语言实现。amis 允许通过 JSON 配置来定义页面，而 amisgo 则进一步优化了这一做法，通过 Go 的类型系统定义各种组件，并将其转换为 JSON，最终通过 Go template 渲染出 amis SDK 支持的 HTML 页面。针对原生 amis 较复杂的交互部分，也增加了基于回调的简化方法。
 
 ## 核心模块 internal/comp
+
 这个模块用于定义各种组件，代码非常简单，遵循统一模式。
 
 ### 1. 组件的基本定义
+
 每个组件的基本定义和构造方法如下：
 
 ```go
@@ -21,7 +23,8 @@ func NewForm() Form {
 }
 ```
 
-> 其中 schema.Shema 底层是 map[string]any: 
+> 其中 schema.Shema 底层是 map[string]any:
+>
 > ```go
 > type Schema map[string]any
 > ```
@@ -40,8 +43,8 @@ func (f Form) Body(value ...any) Form {
 }
 ```
 
-> 其中，set 是一个辅助方法，用于设置属性值并返回当前组件实例：
-> 
+> 其中，set 是一个辅助方法，用于设置属性值并返回当前组件实例以支持链式调用：
+>
 > ```go
 > func (f Form) set(key string, value any) Form {
 >   f[key] = value
@@ -65,7 +68,7 @@ app.Page().Title("amisgo").Body(
 )
 ```
 
-相较于原生 amis，amisgo 具有以下优势：
+相较于原生 JavaScript 版的 amis，amisgo 具有以下优势：
 
 1. **强类型系统**：通过 Go 的 map 别名定义组件，方法定义组件属性，减少了 JSON 拼写错误的风险。
 2. **简化表达**：amis 中交互事件描述较为复杂，amisgo 借助回调函数等简化了这一部分，使其变得明白晓畅。详见后续章节。

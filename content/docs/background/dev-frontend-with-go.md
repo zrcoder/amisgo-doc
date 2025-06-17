@@ -41,7 +41,7 @@ hugo serve
 
 手机、平板、电脑等桌面 UI，基本一种操作系统就有一种编程语言和框架来做。如 iOS/MacOS 的 objective-c/swift 语言和 cocoas 框架，Android 的 Java/Kotlin 语言与 SDK，windows 我只知道古早的 mfc 框架，学生时代在图书馆的书上看到的（书籍并不太适合传承编程知识，效率太低，不过不影响当时的探究热情，当时都没有自己的电脑）。
 
-也有一些框架试图统一，如 Flutter、Qt、React Native 等，实际上并不怎么成功，没普及起来，各种系统的差异给类似的框架带来巨大挑战。Go 语言方面有两个库值得一提：fyne 和 wails。fyne 可类比 Qt，wails 可类比 Electron，都不怎么成熟。比如 fyne 中并没有类似 monaco-editor （js 生态编辑器库，vscode 就用该组件）的组件，如果从头写一个，就太费劲了。wails 有个创新，能自动生成 Go 对应的 js 方法供前端调用，可以在其官网看看它的工作原理： https://wails.io/zh-Hans/docs/howdoesitwork 。但这样的意义可能并不大，首先不比前后分离的主流做法强多少，其次也不比 Electron 强多少。
+也有一些框架试图统一，如 Flutter、Qt、React Native 等，实际上并不怎么成功，没普及起来，各种系统的差异给类似的框架带来巨大挑战。Go 语言方面有两个库值得一提：fyne 和 wails。fyne 可类比 Qt，wails 可类比 Electron，都不怎么成熟。比如 fyne 中并没有类似 monaco-editor （js 生态编辑器库，vscode 就用该组件）的组件，如果从头写一个，就太费劲了。wails 有个创新，能自动生成 Go 对应的 js 方法供前端调用，可以在其官网看看它的工作原理： <https://wails.io/zh-Hans/docs/howdoesitwork> 。但这样的意义可能并不大，首先不比前后分离的主流做法强多少，其次也不比 Electron 强多少。
 
 ## Web UI
 
@@ -87,11 +87,11 @@ err := tmpl.Execute(someWriter, data)
 
 ### Go + WebAssembly
 
-Go 从 1.11 版本加入了对 WebAssymbly 的支持， 见 https://go.dev/wiki/WebAssembly 。这使得 Go 和 js 交互成为可能。之后涌现了不少框架和库，不过现在还活跃的很少了。
+Go 从 1.11 版本加入了对 WebAssymbly 的支持， 见 <https://go.dev/wiki/WebAssembly> 。这使得 Go 和 js 交互成为可能。之后涌现了不少框架和库，不过现在还活跃的很少了。
 
-基于 WebAssymbly 的应用，比较深入和有意思的是 https://goplay.space/#draw ，首先，从头手撸了一个代码编辑器，虽然没有像 monaco-editor 那么强大，但是对该项目而言已经足够，也给大家一个从头手撸的参考；其次利用 cavas 实现了简单的海龟作图模块 —— 可惜这个项目现在也沉寂了。
+基于 WebAssymbly 的应用，比较深入和有意思的是 <https://goplay.space/#draw> ，首先，从头手撸了一个代码编辑器，虽然没有像 monaco-editor 那么强大，但是对该项目而言已经足够，也给大家一个从头手撸的参考；其次利用 cavas 实现了简单的海龟作图模块 —— 可惜这个项目现在也沉寂了。
 
-虽然基于 Go + WebAssymbly 的大部分库和应用都沉寂了，但坚挺的还是有，最推荐的一个是 https://github.com/maxence-charriere/go-app ，类似 js 生态的 react， 用声明式语法写前端。个人基于该库维护有一个简单应用 [ndor](https://ndor.netlify.app)。
+虽然基于 Go + WebAssymbly 的大部分库和应用都沉寂了，但坚挺的还是有，最推荐的一个是 <https://github.com/maxence-charriere/go-app> ，类似 js 生态的 react， 用声明式语法写前端。个人基于该库维护有一个简单应用 [ndor](https://ndor.netlify.app)。
 
 > 另一个有趣的库是[vugu](https://github.com/vugu/vugu)，类似 js 生态的 vue。和 go-app 不同的是，这个库又定义了一套方言（DSL），虽然语法并不复杂，但还是懒得去学了；go-app 那样用通用语言（Go）写就不错。
 
@@ -99,7 +99,7 @@ Go 的 WebAssymbly 有个问题是编译出来的 wasm 文件体积比较大，�
 
 ### amisgo
 
-就是当前这个项目。基于百度的 amis 库，组件丰富、响应式布局，同时也简化了 amis 本身的数据获取及组件交互代码。
+就是当前这个项目。基于百度的 amis 库，组件丰富、响应式布局，同时也简化了 amis 本身的数据获取及组件交互代码。底层原理是用标准库的 template 做服务端渲染，基于百度的 amis （JavaScript库），amisgo 的代码非常简洁。
 
 ## 体会
 

@@ -36,7 +36,7 @@ app.Form().Body(
 
 ### 关键点解析
 
-- **Transform 方法**：`Run` 和 `Format` 按钮的 `Transform` 方法用于处理用户输入并调用相应的 API。`compile` 和 `format` 函数负责与 Go+ Playground 的 API 交互，并将结果返回给前端。
+- **按钮的 Transform 方法**：`Run` 和 `Format` 按钮的 `Transform` 方法用于处理用户输入并调用相应的 API。`compile` 和 `format` 函数负责与 Go+ Playground 的 API 交互，并将结果返回给前端。
 
 - **本地代理服务**：通过本地代理服务中转请求，可以简化前端代码，避免在组件中直接编写 API 调用逻辑。
 
