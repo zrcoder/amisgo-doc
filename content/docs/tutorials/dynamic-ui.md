@@ -2,6 +2,7 @@
 title: "动态 UI"
 date: 2025-03-28T17:47:23+08:00
 weight: 5
+next: docs/examples
 ---
 
 我们可以借助 service 组件，实现完全动态的 UI，让我们看看如下例子：

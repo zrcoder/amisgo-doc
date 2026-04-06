@@ -2,8 +2,8 @@
 title: "常见问题"
 date: 2024-12-29T20:30:56+08:00
 breadcrumbs: false
-weight: 3
-prev: docs/tutorials/practical-apps
+weight: 4
+prev: docs/examples
 ---
 
 ## 怎么导入本地 SDK

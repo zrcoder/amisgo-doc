@@ -1,6 +1,8 @@
 ---
 title: "应用案例"
-weight: 50
+weight: 3
+
+prev: docs/tutorials/dynamic-ui
 next: docs/qa
 ---
 
@@ -39,3 +41,7 @@ PodFiles 是一个基于 amisgo 的工具，旨在管理 Kubernetes 集群中 Po
 - hanoi
 
   ![hanoi](/hanoi.png)
+
+- ice-magic
+
+  ![ice-magic](/ice-magic.png)

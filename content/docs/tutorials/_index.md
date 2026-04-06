@@ -11,5 +11,4 @@ breadcrumbs: false
 {{< card link="simplify-the-interaction-code" title="简化交互代码" icon="book-open" >}}
 {{< card link="integrate-with-other-frameworks" title="和其他框架集成" icon="book-open" >}}
 {{< card link="dynamic-ui" title="动态 UI" icon="book-open" >}}
-{{< card link="practical-apps" title="应用案例" icon="book-open" >}}
 {{< /cards >}}

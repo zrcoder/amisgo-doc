@@ -27,15 +27,15 @@ hugo serve
 
 [yaq](https://github.com/zrcoder/yaqs)
 
-![codestar-hanoi](hanoi.png)
+![codestar-hanoi](/hanoi.png)
 
 [rdor](https://github.com/zrcoder/rdor)
 
-![ballsort](ballsort.png)
+![ballsort](/ballsort.png)
 
 [leetgo](https://github.com/zrcoder/leetgo)
 
-![leetgo](example.gif)
+![leetgo](/example.gif)
 
 ## GUI
 
