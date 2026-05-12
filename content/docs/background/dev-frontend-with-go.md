@@ -25,7 +25,7 @@ hugo serve
 
 不得不提 go 现在有了 bubbletea 系列库，确实不错，个人也用其写过一些小游戏和应用,观感如下：
 
-[yaq](https://github.com/zrcoder/yaqs)
+[yaq](https://github.com/zrcoder/yaq)
 
 ![codestar-hanoi](/hanoi.png)
 

@@ -36,7 +36,7 @@ PodFiles 是一个基于 amisgo 的工具，旨在管理 Kubernetes 集群中 Po
 
 - ball-sort
 
-  ![ball-sort](/ball-sort.png)
+  ![ball-sort](/ballsort.png)
 
 - hanoi
 
